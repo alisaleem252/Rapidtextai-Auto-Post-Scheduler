@@ -12,6 +12,7 @@ class ChatGPTScheduler_Settings_Page {
 	}
     // Enqueue own styles
     function enqueue_custom_styles() {
+        wp_enqueue_script( 'adminchatgpt', chatgpt_scheduler_PATH.'/js/admin.js', array('jQuery'),false);
         wp_enqueue_style( 'chatgpt_scheduler_admin',chatgpt_scheduler_PATH.'/css/admin.css', array(),false,'all');
                         
     }
@@ -36,32 +37,39 @@ class ChatGPTScheduler_Settings_Page {
             update_option('chatGPT_schedule_settings',$_POST['chatGPT_schedule_settings']);
             $message.= '<div style=" display: block !important;" class="update-message notice inline notice-warning notice-alt"><p>Updated</p></div>';
         }
-$chatGPT_schedule_settings =  get_option('chatGPT_schedule_settings',array());
-$Primary_Keyword = isset($chatGPT_schedule_settings['Primary_Keyword']) ? $chatGPT_schedule_settings['Primary_Keyword'] : '';
-$Post_Type = isset($rap_settings['Post_Type']) ? $rap_settings['Post_Type'] : '';
+        $chatGPT_schedule_settings =  get_option('chatGPT_schedule_settings',array());
+        $Primary_Keyword = isset($chatGPT_schedule_settings['Primary_Keyword']) ? $chatGPT_schedule_settings['Primary_Keyword'] : '';
+        $Post_Type = isset($rap_settings['Post_Type']) ? $rap_settings['Post_Type'] : '';
         ?>
 		<div class="wrap">
 			<h1>ChatGPT Scheduler</h1>
             <?php echo $message?>
             <form name="chatGPT_schedule_settings" id="chatGPT_schedule_settings" method="POST">
-                <table class="wp-list-table widefat fixed striped">
+                <table class="wp-list-table widefat fixed striped ChatGPT_scheduler_Table">
                     <tr>
                         <th>Prompt Type</th>
                         <th>Prompt</th>
                         <th></th>
                         <th>Post Type</td>
+                        <th>Taxonomy</td>
+                        <th>Taxonomy Terms</td>
                         <th>Schedule Time</th>
                         <th>Schedule Pattern</th>
+                        <th>Post Status</th>
                         <th>Clone -- Remove</th>
                     </tr>
                     <tr>
-                        <td>Custom</td>
-                        <td colspan=2><input type="text" class="regular-text" name="chatGPT_schedule_settings[Primary_Keyword]" id="Primary_Keyword" value="<?php echo $Primary_Keyword?>" /></td>
+                        <td>ChatGPT</td>
+                        <td colspan=2><input type="text" class="regular-text" name="chatGPT_schedule_settings[Primary_Keyword][]" id="Primary_Keyword" value="<?php echo $Primary_Keyword?>" /></td>
                         <td><?php echo $helper->get_post_types_dropdown()?></td>
-                        <td><input type="time" name="chatGPT_schedule_settings[time]" /></td>
+                        <td><span id="ChatGPT_taxonomies"></span></td>
+                        <td><span id="ChatGPT_taxonomy_terms"></span></td>
+                        <td><input type="time" name="chatGPT_schedule_settings[time][]" /></td>
                         <td><?php echo $helper->schedule_pattern_dropdown()?></td>
-                        <td><span class="dashicons dashicons-plus-alt"></span> -- <span class="dashicons dashicons-dismiss"></span></td>
+                        <td><?php echo $helper->schedule_post_status_dropdown()?></td>
+                        <td><span id="ChatGPT_scheduler_copy" class="dashicons dashicons-plus-alt"></span></span></td>
                     </tr>
+                    <?php echo $helper->get_saved_schedules()?>
                 </table>
                 
                 <p>
