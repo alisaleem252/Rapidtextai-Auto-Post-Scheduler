@@ -37,5 +37,13 @@ define('chatgpt_scheduler_URL', plugin_dir_url(__FILE__));
 define('chatgpt_scheduler_PATH', dirname(__FILE__));
 define('chatgpt_scheduler_network', 'https://gigsix/com/openai/');
 
+	add_action('admin_enqueue_scripts', 'chatgpt_admin_scriptsCBF');
+    function chatgpt_admin_scriptsCBF(){
+        wp_enqueue_script('chatgpt_admin_JS-JS', chatgpt_scheduler_URL.'/js/admin.js',array('jquery'));
+            
+    } // function wpwlc_ex_enqueue_scriptsCBF() 
+
+
 require_once(chatgpt_scheduler_PATH.'/inc/helper.php');
 require_once(chatgpt_scheduler_PATH.'/inc/settings.php');
+require_once(chatgpt_scheduler_PATH.'/inc/ajax.php');

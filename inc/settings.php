@@ -1,5 +1,4 @@
 <?php
-
 // Settings Page: ChatGPTScheduler
 // Retrieving values: get_option( 'your_field_id' )
 class ChatGPTScheduler_Settings_Page {
@@ -35,41 +34,81 @@ class ChatGPTScheduler_Settings_Page {
         $helper = new chatgpt_scheduler_Helper;
         if(isset($_POST['noncetoken_name_chatGPT_schedule_settings']) && wp_verify_nonce($_POST['noncetoken_name_chatGPT_schedule_settings'],'noncetoken_chatGPT_schedule_settings') && isset($_POST['chatGPT_schedule_settings_submitBtn']) ){
             update_option('chatGPT_schedule_settings',$_POST['chatGPT_schedule_settings']);
-            $message.= '<div style=" display: block !important;" class="update-message notice inline notice-warning notice-alt"><p>Updated</p></div>';
+            $message.= '<div style=" display: block !important;" class="notice inline notice-info notice-alt"><p>Updated</p></div>';
+           echo '<pre>';print_r($_POST);echo '</pre>';
         }
         $chatGPT_schedule_settings =  get_option('chatGPT_schedule_settings',array());
-        $Primary_Keyword = isset($chatGPT_schedule_settings['Primary_Keyword']) ? $chatGPT_schedule_settings['Primary_Keyword'] : '';
-        $Post_Type = isset($rap_settings['Post_Type']) ? $rap_settings['Post_Type'] : '';
+
+       // $taxonomies = get_object_taxonomies(get_post_types(array('public'=> true,'_builtin'=>false ), 'names', 'and' ));
+
+        $args = array(
+            'public'=>true,
+            'object_type'=> array('product')
+            );
+        //   $output = 'objects'; // or objects
+        //    $operator = ''; // 'and' or 'or'
+//$taxonomies = get_taxonomies( $args,'objects');
+      $taxonomies = get_taxonomies(array('object_type' => array('product'),'public'=>true),'objects');
+      $taxonomy_objects = get_terms('category',array('hide_empty'=>0));
+      echo '<pre>';print_r($chatGPT_schedule_settings);echo '</pre>';
+      
+        $Primary_Keyword_0 = isset($chatGPT_schedule_settings['Primary_Keyword'][0]) ? $chatGPT_schedule_settings['Primary_Keyword'][0] : '';
+        $Post_Type_0 = isset($chatGPT_schedule_settings['Post_Type'][0]) ? $chatGPT_schedule_settings['Post_Type'][0] : '';
+        $tax_slug_0 = isset($chatGPT_schedule_settings['tax_slug'][0]) ? $chatGPT_schedule_settings['tax_slug'][0] : '';
+        $tax_label_0 = isset($chatGPT_schedule_settings['tax_label'][0]) ? $chatGPT_schedule_settings['tax_label'][0] : '';
+        $tax_terms = isset($chatGPT_schedule_settings['taxonomy_terms']) ? $chatGPT_schedule_settings['taxonomy_terms'] : array();
+        $time_0 = isset($chatGPT_schedule_settings['time'][0]) ? $chatGPT_schedule_settings['time'][0] : '';
+        $Pattern_0 = isset($chatGPT_schedule_settings['Pattern'][0]) ? $chatGPT_schedule_settings['Pattern'][0] : '';
+        $post_status_0 = isset($chatGPT_schedule_settings['post_status'][0]) ? $chatGPT_schedule_settings['post_status'][0] : '';
+
+       
+
         ?>
 		<div class="wrap">
 			<h1>ChatGPT Scheduler</h1>
             <?php echo $message?>
             <form name="chatGPT_schedule_settings" id="chatGPT_schedule_settings" method="POST">
-                <table class="wp-list-table widefat fixed striped ChatGPT_scheduler_Table">
+                <table id="wrapper_content" class="wp-list-table widefat striped ChatGPT_scheduler_Table">
+                <thead>
                     <tr>
                         <th>Prompt Type</th>
                         <th>Prompt</th>
-                        <th></th>
                         <th>Post Type</td>
                         <th>Taxonomy</td>
                         <th>Taxonomy Terms</td>
                         <th>Schedule Time</th>
                         <th>Schedule Pattern</th>
                         <th>Post Status</th>
-                        <th>Clone -- Remove</th>
+                        <th>Add/ Remove</th>
                     </tr>
+                <thead>
+                <tbody id="copy_content">
                     <tr>
                         <td>ChatGPT</td>
-                        <td colspan=2><input type="text" class="regular-text" name="chatGPT_schedule_settings[Primary_Keyword][]" id="Primary_Keyword" value="<?php echo $Primary_Keyword?>" /></td>
-                        <td><?php echo $helper->get_post_types_dropdown()?></td>
-                        <td><span id="ChatGPT_taxonomies"></span></td>
-                        <td><span id="ChatGPT_taxonomy_terms"></span></td>
-                        <td><input type="time" name="chatGPT_schedule_settings[time][]" /></td>
-                        <td><?php echo $helper->schedule_pattern_dropdown()?></td>
-                        <td><?php echo $helper->schedule_post_status_dropdown()?></td>
-                        <td><span id="ChatGPT_scheduler_copy" class="dashicons dashicons-plus-alt"></span></span></td>
+                        <td><input type="text" name="chatGPT_schedule_settings[Primary_Keyword][]" class="Primary_Keyword" value="<?php echo $Primary_Keyword_0?>" /></td>
+                        <td><?php echo $helper->get_post_types_dropdown($Post_Type_0)?></td>
+                        <td><span class="ChatGPT_taxonomy"><?php echo $tax_label_0?></span></td>
+                        <td><span class="ChatGPT_taxonomy_terms"><?php
+                            $tax_terms_html = '<input type="hidden" name="chatGPT_schedule_settings[tax_label][]" value="'.$tax_label_0.'" /><input type="hidden" name="chatGPT_schedule_settings[tax_slug][]" value="'.$tax_slug_0.'" />';
+                            $taxonomy_terms = get_terms($tax_slug_0,array('hide_empty'=>0));
+                            if($tax_slug_0){
+                                if(isset($taxonomy_terms[0])){
+                                    foreach ($taxonomy_terms as $key => $value){
+                                        $tax_terms_html .= '<div><input type="checkbox" '.(array_search($value->term_id,$tax_terms)!==false ? 'checked' : '').' name="chatGPT_schedule_settings[taxonomy_terms][]" value="'.($value->term_id).'" /> '.($value->name).'</div>';
+                                    }
+                                    echo $tax_terms_html;
+                                }
+                            }
+                        ?></span></td>
+                        <td><input type="time" name="chatGPT_schedule_settings[time][]" value="<?php echo $time_0?>" /></td>
+                        <td><?php echo $helper->schedule_pattern_dropdown($Pattern_0)?></td>
+                        <td><?php echo $helper->schedule_post_status_dropdown($post_status_0)?></td>
+                        <td><span id="ChatGPT_scheduler_copy" class="dashicons dashicons-plus-alt add_record"></span></td>
                     </tr>
-                    <?php echo $helper->get_saved_schedules()?>
+                </tbody>
+                    <?php 
+                  if(isset($chatGPT_schedule_settings['Primary_Keyword']) && count($chatGPT_schedule_settings['Primary_Keyword']) > 1)
+                    echo $helper->get_saved_schedules()?>
                 </table>
                 
                 <p>
