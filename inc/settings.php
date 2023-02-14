@@ -35,22 +35,8 @@ class ChatGPTScheduler_Settings_Page {
         if(isset($_POST['noncetoken_name_chatGPT_schedule_settings']) && wp_verify_nonce($_POST['noncetoken_name_chatGPT_schedule_settings'],'noncetoken_chatGPT_schedule_settings') && isset($_POST['chatGPT_schedule_settings_submitBtn']) ){
             update_option('chatGPT_schedule_settings',$_POST['chatGPT_schedule_settings']);
             $message.= '<div style=" display: block !important;" class="notice inline notice-info notice-alt"><p>Updated</p></div>';
-           echo '<pre>';print_r($_POST);echo '</pre>';
         }
         $chatGPT_schedule_settings =  get_option('chatGPT_schedule_settings',array());
-
-       // $taxonomies = get_object_taxonomies(get_post_types(array('public'=> true,'_builtin'=>false ), 'names', 'and' ));
-
-        $args = array(
-            'public'=>true,
-            'object_type'=> array('product')
-            );
-        //   $output = 'objects'; // or objects
-        //    $operator = ''; // 'and' or 'or'
-//$taxonomies = get_taxonomies( $args,'objects');
-      $taxonomies = get_taxonomies(array('object_type' => array('product'),'public'=>true),'objects');
-      $taxonomy_objects = get_terms('category',array('hide_empty'=>0));
-      echo '<pre>';print_r($chatGPT_schedule_settings);echo '</pre>';
       
         $Primary_Keyword_0 = isset($chatGPT_schedule_settings['Primary_Keyword'][0]) ? $chatGPT_schedule_settings['Primary_Keyword'][0] : '';
         $Post_Type_0 = isset($chatGPT_schedule_settings['Post_Type'][0]) ? $chatGPT_schedule_settings['Post_Type'][0] : '';

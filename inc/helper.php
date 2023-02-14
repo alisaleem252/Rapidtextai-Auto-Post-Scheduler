@@ -10,7 +10,7 @@ class chatgpt_scheduler_Helper {
         echo '</select>';
     }
     public function schedule_pattern_dropdown($selected=''){
-        $patterns = array('Repeat','Once');
+        $patterns = array('Once','Repeat Hourly','Repeat Daily','Repeat Twice Daily','Repeat Weekly','Repeat Monthly','Repeat Yearly');
         echo '<select name="chatGPT_schedule_settings[Pattern][]">';
         foreach ($patterns as $pattern) {
         echo '<option '.($selected == $pattern ? 'selected' : '').'  value="' . $pattern . '">' . $pattern . '</option>';

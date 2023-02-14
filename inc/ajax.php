@@ -9,7 +9,6 @@ class ChatGPT_scheduler_ajax{
     function get_taxonomy_callback() {
         $post_type = $_POST['post_type'];
         $taxonomies = get_taxonomies(array('object_type' => array($post_type),'public'=>true),'objects');
-        //print_r($taxonomies);
         foreach ($taxonomies as $taxonomy) {
             $taxonomy_label = $taxonomy->label;
             $taxonomy_slug = $taxonomy->name;
