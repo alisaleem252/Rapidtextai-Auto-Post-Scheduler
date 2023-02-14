@@ -69,7 +69,6 @@ class ChatGPTScheduler_Settings_Page {
             <?php echo $message?>
             <form name="chatGPT_schedule_settings" id="chatGPT_schedule_settings" method="POST">
                 <table id="wrapper_content" class="wp-list-table widefat striped ChatGPT_scheduler_Table">
-                <thead>
                     <tr>
                         <th>Prompt Type</th>
                         <th>Prompt</th>
@@ -81,9 +80,8 @@ class ChatGPTScheduler_Settings_Page {
                         <th>Post Status</th>
                         <th>Add/ Remove</th>
                     </tr>
-                <thead>
-                <tbody id="copy_content">
-                    <tr>
+                <!--tbody id="copy_content"-->
+                    <tr id="copy_content">
                         <td>ChatGPT</td>
                         <td><input type="text" name="chatGPT_schedule_settings[Primary_Keyword][]" class="Primary_Keyword" value="<?php echo $Primary_Keyword_0?>" /></td>
                         <td><?php echo $helper->get_post_types_dropdown($Post_Type_0)?></td>
@@ -104,11 +102,13 @@ class ChatGPTScheduler_Settings_Page {
                         <td><?php echo $helper->schedule_pattern_dropdown($Pattern_0)?></td>
                         <td><?php echo $helper->schedule_post_status_dropdown($post_status_0)?></td>
                         <td><span id="ChatGPT_scheduler_copy" class="dashicons dashicons-plus-alt add_record"></span></td>
-                    </tr>
-                </tbody>
+                        
+                <!--/tbody-->
                     <?php 
                   if(isset($chatGPT_schedule_settings['Primary_Keyword']) && count($chatGPT_schedule_settings['Primary_Keyword']) > 1)
                     echo $helper->get_saved_schedules()?>
+
+                        
                 </table>
                 
                 <p>

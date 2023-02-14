@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-    $('.chatGPT_schedule_settings_post_type').change(function() {
+  $(document.body).off('change', '.chatGPT_schedule_settings_post_type').on('change', '.chatGPT_schedule_settings_post_type',function(e) {
       var post_type = $(this).val();
       var thisvar = $(this);
       $.ajax({
@@ -15,7 +15,7 @@ jQuery(document).ready(function($) {
           $(thisvar).parent().parent().find('.ChatGPT_taxonomy_terms').html('loading. . . .');
         },
         success: function(response) {
-          console.log(response);
+          //console.log(response);
           $(thisvar).parent().parent().find('.ChatGPT_taxonomy').html('');
           $(thisvar).parent().parent().find('.ChatGPT_taxonomy_terms').html('');
           $(thisvar).parent().parent().find('.ChatGPT_taxonomy').html(response.tax_label);
@@ -25,12 +25,13 @@ jQuery(document).ready(function($) {
     });
 
 
-    $('.add_record').click(function() {
-     var copy_content = $('#copy_content').html();
-     console.log(copy_content);
-     $('#wrapper_content').append(copy_content);
-      
-      
+    $(document.body).off('click', '.add_record').on('click', '.add_record',function(e) {     
+      var copy_content = $('#copy_content').html();
+     $('#wrapper_content').append('<tr>'+copy_content+'</tr>');
+    });
+
+    $(document.body).off('click', '.remove_record').on('click', '.remove_record',function(e) {     
+      $(this).parent().parent().remove();
     });
 
   });
