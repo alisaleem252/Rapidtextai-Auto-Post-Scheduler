@@ -91,7 +91,7 @@ class ChatGPTScheduler_Settings_Page {
                         
                 <!--/tbody-->
                     <?php 
-                  if(isset($chatGPT_schedule_settings['Primary_Keyword']) && count($chatGPT_schedule_settings['Primary_Keyword']) > 1)
+                  if(isset($chatGPT_schedule_settings['Primary_Keyword']) && is_array($chatGPT_schedule_settings['Primary_Keyword']) && count($chatGPT_schedule_settings['Primary_Keyword']) > 1)
                     echo $helper->get_saved_schedules()?>
 
                         

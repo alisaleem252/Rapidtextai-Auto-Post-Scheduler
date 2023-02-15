@@ -4,6 +4,7 @@ class chatgpt_scheduler_Helper {
     public function get_post_types_dropdown($selected='') {
         $post_types = get_post_types(array('public' => true), 'objects');
         echo '<select class="chatGPT_schedule_settings_post_type" name="chatGPT_schedule_settings[Post_Type][]">';
+        echo '<option>Select Post Type</option>';
         foreach ($post_types as $post_type) {
         echo '<option '.($selected == $post_type->name ? 'selected' : '').' value="' . $post_type->name . '">' . $post_type->labels->singular_name . '</option>';
         }
