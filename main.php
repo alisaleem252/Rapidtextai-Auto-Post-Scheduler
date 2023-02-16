@@ -37,13 +37,6 @@ define('chatgpt_scheduler_URL', plugin_dir_url(__FILE__));
 define('chatgpt_scheduler_PATH', dirname(__FILE__));
 define('chatgpt_scheduler_network', 'https://gigsix/com/openai/');
 
-	add_action('admin_enqueue_scripts', 'chatgpt_admin_scriptsCBF');
-    function chatgpt_admin_scriptsCBF(){
-        wp_enqueue_script('chatgpt_admin_JS-JS', chatgpt_scheduler_URL.'/js/admin.js',array('jquery'));
-            
-    } // function wpwlc_ex_enqueue_scriptsCBF() 
-
-
 require_once(chatgpt_scheduler_PATH.'/inc/helper.php');
 require_once(chatgpt_scheduler_PATH.'/inc/settings.php');
 require_once(chatgpt_scheduler_PATH.'/inc/ajax.php');
@@ -67,5 +60,16 @@ require_once(chatgpt_scheduler_PATH.'/inc/cron_schedules.php');
         if(!wp_next_scheduled( 'cgpt_everyyear_cron_schedule_event'))
             wp_schedule_event( time(), 'cgpt_everyyear', 'cgpt_everyyear_cron_schedule_event');
 
-    } // functio
+        if(!wp_next_scheduled( 'cgpt_single_event_cron_schedule_event')){
+            $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array());
+            $chatGPT_schedule_settings =  get_option('chatGPT_schedule_settings',array());
+            if(count($chatGPT_schedule_settings) > 0){
+                foreach ($chatGPT_schedule_settings['Pattern'] as $key => $value) {
+                    if($value == 'once')
+                        wp_schedule_single_event( $chatGPT_schedule_settings['time'][$key], 'cgpt_single_event_cron_schedule_event');
 
+                }
+            }
+            
+        }
+    } // functio
