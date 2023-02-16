@@ -6,7 +6,7 @@
       }
 
       function add_meta_boxes_CBF(){
-         add_meta_box('chatgpt_cb_metabox_id', __('Used as ChatGPT Schedule ?','yesdevproductcustomizer'),array(&$this,'chatgpt_cb_metabox_idCBF'));
+         add_meta_box('chatgpt_cb_metabox_id', __('Used as ChatGPT Schedule Template ?','yesdevproductcustomizer'),array(&$this,'chatgpt_cb_metabox_idCBF'));
 
       }
 

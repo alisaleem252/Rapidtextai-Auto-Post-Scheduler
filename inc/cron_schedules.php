@@ -8,6 +8,7 @@
         add_action('cgpt_everyweek_cron_schedule_event',array($this,'cgpt_everyweek_cron_schedule_eventCBF'));
         add_action('cgpt_everymonth_cron_schedule_event',array($this,'cgpt_everymonth_cron_schedule_eventCBF'));
         add_action('cgpt_everyyear_cron_schedule_event',array($this,'cgpt_everyyear_cron_schedule_eventCBF'));
+        add_action('cgpt_single_event_cron_schedule_event',array($this,'cgpt_single_event_cron_schedule_eventCBF'));
       }
 
       function cron_schedules_CBF( $schedules ) {
@@ -39,25 +40,100 @@
       }
 
       function cgpt_everyhour_cron_schedule_eventCBF(){
-        
+          $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array());
+          $chatGPT_schedule_settings =  get_option('chatGPT_schedule_settings',array());
+
+          if(count($chatGPT_schedule_settings) > 0){
+              foreach ($chatGPT_schedule_settings['Pattern'] as $key => $value) {
+                if($value != 'once'){
+                  $tax_slug = $chatGPT_schedule_settings['tax_slug'][$key];
+                  $term_ids = get_terms($tax_slug, array('fields' => 'ids') );
+                  $pid = wp_insert_post(array('post_title'=>$chatGPT_schedule_settings['Primary_Keyword'][$key],'post_status'=>$chatGPT_schedule_settings['post_status'][$key]));
+                  wp_set_object_terms($pid,$term_ids,$tax_slug);
+                }
+              }
+          }
       }
       function cgpt_everytwelve_hour_cron_schedule_eventCBF(){
-        
+        $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array());
+        $chatGPT_schedule_settings =  get_option('chatGPT_schedule_settings',array());
+          if(count($chatGPT_schedule_settings) > 0){
+            foreach ($chatGPT_schedule_settings['Pattern'] as $key => $value) {
+              if($value != 'once'){
+                $tax_slug = $chatGPT_schedule_settings['tax_slug'][$key];
+                $term_ids = get_terms($tax_slug, array('fields' => 'ids') );
+                $pid = wp_insert_post(array('post_title'=>$chatGPT_schedule_settings['Primary_Keyword'][$key],'post_status'=>$chatGPT_schedule_settings['post_status'][$key]));
+                wp_set_object_terms($pid,$term_ids,$tax_slug);
+              }
+            }
+          }
       }
       function cgpt_everyday_cron_schedule_eventCBF(){
-        
+        $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array());
+        $chatGPT_schedule_settings =  get_option('chatGPT_schedule_settings',array());
+
       }
       function cgpt_everyweek_cron_schedule_eventCBF(){
-        
+        $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array());
+        $chatGPT_schedule_settings =  get_option('chatGPT_schedule_settings',array());
+          if(count($chatGPT_schedule_settings) > 0){
+            foreach ($chatGPT_schedule_settings['Pattern'] as $key => $value) {
+              if($value != 'once'){
+                $tax_slug = $chatGPT_schedule_settings['tax_slug'][$key];
+                $term_ids = get_terms($tax_slug, array('fields' => 'ids') );
+                $pid = wp_insert_post(array('post_title'=>$chatGPT_schedule_settings['Primary_Keyword'][$key],'post_status'=>$chatGPT_schedule_settings['post_status'][$key]));
+                wp_set_object_terms($pid,$term_ids,$tax_slug);
+              }
+            }
+          }
       }
       function cgpt_everymonth_cron_schedule_eventCBF(){
-        
+        $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array());
+        $chatGPT_schedule_settings =  get_option('chatGPT_schedule_settings',array());
+          if(count($chatGPT_schedule_settings) > 0){
+            foreach ($chatGPT_schedule_settings['Pattern'] as $key => $value) {
+              if($value != 'once'){
+                $tax_slug = $chatGPT_schedule_settings['tax_slug'][$key];
+                $term_ids = get_terms($tax_slug, array('fields' => 'ids') );
+                $pid = wp_insert_post(array('post_title'=>$chatGPT_schedule_settings['Primary_Keyword'][$key],'post_status'=>$chatGPT_schedule_settings['post_status'][$key]));
+                wp_set_object_terms($pid,$term_ids,$tax_slug);
+              }
+            }
+          }
       }
       function cgpt_everyyear_cron_schedule_eventCBF(){
-        
+        $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array());
+        $chatGPT_schedule_settings =  get_option('chatGPT_schedule_settings',array());
+          if(count($chatGPT_schedule_settings) > 0){
+            foreach ($chatGPT_schedule_settings['Pattern'] as $key => $value) {
+              if($value != 'once'){
+                $tax_slug = $chatGPT_schedule_settings['tax_slug'][$key];
+                $term_ids = get_terms($tax_slug, array('fields' => 'ids') );
+                $pid = wp_insert_post(array('post_title'=>$chatGPT_schedule_settings['Primary_Keyword'][$key],'post_status'=>$chatGPT_schedule_settings['post_status'][$key]));
+                wp_set_object_terms($pid,$term_ids,$tax_slug);
+              }
+            }
+          }
       }
 
 
+
+
+      function cgpt_single_event_cron_schedule_eventCBF(){
+        $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array());
+        $chatGPT_schedule_settings =  get_option('chatGPT_schedule_settings',array());
+          if(count($chatGPT_schedule_settings) > 0){
+            foreach ($chatGPT_schedule_settings['Pattern'] as $key => $value) {
+              if($value == 'once'){
+                $tax_slug = $chatGPT_schedule_settings['tax_slug'][$key];
+                $term_ids = get_terms($tax_slug, array('fields' => 'ids') );
+                $pid = wp_insert_post(array('post_title'=>$chatGPT_schedule_settings['Primary_Keyword'][$key],'post_status'=>$chatGPT_schedule_settings['post_status'][$key]));
+                wp_set_object_terms($pid,$term_ids,$tax_slug);
+              }
+            }
+          }
+      }
+      
       
   } // class
   $ChatGPT_Cron_Schedules = new ChatGPT_Cron_Schedules;
