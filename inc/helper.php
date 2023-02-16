@@ -52,7 +52,7 @@ class chatgpt_scheduler_Helper {
                                 }
                             }
                         ?></span></td>
-                        <td><input type="time" name="chatGPT_schedule_settings[time][]" class="time" value="<?php echo $chatGPT_schedule_settings['time'][$index]?>" /></td>
+                        <td><input type="datetime-local" name="chatGPT_schedule_settings[time][]" class="time" value="<?php echo $chatGPT_schedule_settings['time'][$index]?>" /></td>
                         <td><?php echo $this->schedule_pattern_dropdown($chatGPT_schedule_settings['Pattern'][$index])?></td>
                         <td><?php echo $this->schedule_post_status_dropdown($chatGPT_schedule_settings['post_status'][$index])?></td>
                         <td><span id="ChatGPT_scheduler_copy_<?php echo $index?>" class="dashicons dashicons-dismiss remove_record"></span></td>
