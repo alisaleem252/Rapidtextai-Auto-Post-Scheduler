@@ -46,10 +46,21 @@
           if(count($chatGPT_schedule_settings) > 0){
               foreach ($chatGPT_schedule_settings['Pattern'] as $key => $value) {
                 if($value != 'once'){
+                  $concern_terms = array();
                   $tax_slug = $chatGPT_schedule_settings['tax_slug'][$key];
                   $term_ids = get_terms($tax_slug, array('fields' => 'ids') );
-                  $pid = wp_insert_post(array('post_title'=>$chatGPT_schedule_settings['Primary_Keyword'][$key],'post_status'=>$chatGPT_schedule_settings['post_status'][$key]));
-                  wp_set_object_terms($pid,$term_ids,$tax_slug);
+                  $settings_tids = $chatGPT_schedule_settings['taxonomy_terms'][$key];
+                  $settings_tids = is_array($settings_tids) ? $settings_tids : array();
+                  if(isset($term_ids[0])){
+                    foreach ($term_ids as $key => $term_id) {
+                      if(array_search($term_id,$settings_tids)!==false)
+                      $concern_terms[]=$term_id;
+                    }
+                  }
+                  $pid = wp_insert_post(array('post_type'=>$chatGPT_schedule_settings['Post_Type'][$key],'post_title'=>$chatGPT_schedule_settings['Primary_Keyword'][$key],'post_status'=>$chatGPT_schedule_settings['post_status'][$key]));
+
+                  if(isset($concern_terms[0]))
+                  wp_set_object_terms($pid,$concern_terms,$tax_slug);
                 }
               }
           }
@@ -57,21 +68,52 @@
       function cgpt_everytwelve_hour_cron_schedule_eventCBF(){
         $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array());
         $chatGPT_schedule_settings =  get_option('chatGPT_schedule_settings',array());
-          if(count($chatGPT_schedule_settings) > 0){
-            foreach ($chatGPT_schedule_settings['Pattern'] as $key => $value) {
-              if($value != 'once'){
-                $tax_slug = $chatGPT_schedule_settings['tax_slug'][$key];
-                $term_ids = get_terms($tax_slug, array('fields' => 'ids') );
-                $pid = wp_insert_post(array('post_title'=>$chatGPT_schedule_settings['Primary_Keyword'][$key],'post_status'=>$chatGPT_schedule_settings['post_status'][$key]));
-                wp_set_object_terms($pid,$term_ids,$tax_slug);
+        if(count($chatGPT_schedule_settings) > 0){
+          foreach ($chatGPT_schedule_settings['Pattern'] as $key => $value) {
+            if($value != 'once'){
+              $concern_terms = array();
+              $tax_slug = $chatGPT_schedule_settings['tax_slug'][$key];
+              $term_ids = get_terms($tax_slug, array('fields' => 'ids') );
+              $settings_tids = $chatGPT_schedule_settings['taxonomy_terms'][$key];
+              $settings_tids = is_array($settings_tids) ? $settings_tids : array();
+              if(isset($term_ids[0])){
+                foreach ($term_ids as $key => $term_id) {
+                  if(array_search($term_id,$settings_tids)!==false)
+                  $concern_terms[]=$term_id;
+                }
               }
+              $pid = wp_insert_post(array('post_type'=>$chatGPT_schedule_settings['Post_Type'][$key],'post_title'=>$chatGPT_schedule_settings['Primary_Keyword'][$key],'post_status'=>$chatGPT_schedule_settings['post_status'][$key]));
+
+              if(isset($concern_terms[0]))
+              wp_set_object_terms($pid,$concern_terms,$tax_slug);
             }
           }
+        }
       }
       function cgpt_everyday_cron_schedule_eventCBF(){
         $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array());
         $chatGPT_schedule_settings =  get_option('chatGPT_schedule_settings',array());
+          if(count($chatGPT_schedule_settings) > 0){
+            foreach ($chatGPT_schedule_settings['Pattern'] as $key => $value) {
+              if($value != 'once'){
+                $concern_terms = array();
+                $tax_slug = $chatGPT_schedule_settings['tax_slug'][$key];
+                $term_ids = get_terms($tax_slug, array('fields' => 'ids') );
+                $settings_tids = $chatGPT_schedule_settings['taxonomy_terms'][$key];
+                $settings_tids = is_array($settings_tids) ? $settings_tids : array();
+                if(isset($term_ids[0])){
+                  foreach ($term_ids as $key => $term_id) {
+                    if(array_search($term_id,$settings_tids)!==false)
+                    $concern_terms[]=$term_id;
+                  }
+                }
+                $pid = wp_insert_post(array('post_type'=>$chatGPT_schedule_settings['Post_Type'][$key],'post_title'=>$chatGPT_schedule_settings['Primary_Keyword'][$key],'post_status'=>$chatGPT_schedule_settings['post_status'][$key]));
 
+                if(isset($concern_terms[0]))
+                wp_set_object_terms($pid,$concern_terms,$tax_slug);
+              }
+            }
+          }
       }
       function cgpt_everyweek_cron_schedule_eventCBF(){
         $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array());
@@ -79,10 +121,21 @@
           if(count($chatGPT_schedule_settings) > 0){
             foreach ($chatGPT_schedule_settings['Pattern'] as $key => $value) {
               if($value != 'once'){
+                $concern_terms = array();
                 $tax_slug = $chatGPT_schedule_settings['tax_slug'][$key];
                 $term_ids = get_terms($tax_slug, array('fields' => 'ids') );
-                $pid = wp_insert_post(array('post_title'=>$chatGPT_schedule_settings['Primary_Keyword'][$key],'post_status'=>$chatGPT_schedule_settings['post_status'][$key]));
-                wp_set_object_terms($pid,$term_ids,$tax_slug);
+                $settings_tids = $chatGPT_schedule_settings['taxonomy_terms'][$key];
+                $settings_tids = is_array($settings_tids) ? $settings_tids : array();
+                if(isset($term_ids[0])){
+                  foreach ($term_ids as $key => $term_id) {
+                    if(array_search($term_id,$settings_tids)!==false)
+                    $concern_terms[]=$term_id;
+                  }
+                }
+                $pid = wp_insert_post(array('post_type'=>$chatGPT_schedule_settings['Post_Type'][$key],'post_title'=>$chatGPT_schedule_settings['Primary_Keyword'][$key],'post_status'=>$chatGPT_schedule_settings['post_status'][$key]));
+
+                if(isset($concern_terms[0]))
+                wp_set_object_terms($pid,$concern_terms,$tax_slug);
               }
             }
           }
@@ -93,10 +146,21 @@
           if(count($chatGPT_schedule_settings) > 0){
             foreach ($chatGPT_schedule_settings['Pattern'] as $key => $value) {
               if($value != 'once'){
+                $concern_terms = array();
                 $tax_slug = $chatGPT_schedule_settings['tax_slug'][$key];
                 $term_ids = get_terms($tax_slug, array('fields' => 'ids') );
-                $pid = wp_insert_post(array('post_title'=>$chatGPT_schedule_settings['Primary_Keyword'][$key],'post_status'=>$chatGPT_schedule_settings['post_status'][$key]));
-                wp_set_object_terms($pid,$term_ids,$tax_slug);
+                $settings_tids = $chatGPT_schedule_settings['taxonomy_terms'][$key];
+                $settings_tids = is_array($settings_tids) ? $settings_tids : array();
+                if(isset($term_ids[0])){
+                  foreach ($term_ids as $key => $term_id) {
+                    if(array_search($term_id,$settings_tids)!==false)
+                    $concern_terms[]=$term_id;
+                  }
+                }
+                $pid = wp_insert_post(array('post_type'=>$chatGPT_schedule_settings['Post_Type'][$key],'post_title'=>$chatGPT_schedule_settings['Primary_Keyword'][$key],'post_status'=>$chatGPT_schedule_settings['post_status'][$key]));
+
+                if(isset($concern_terms[0]))
+                wp_set_object_terms($pid,$concern_terms,$tax_slug);
               }
             }
           }
@@ -104,16 +168,27 @@
       function cgpt_everyyear_cron_schedule_eventCBF(){
         $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array());
         $chatGPT_schedule_settings =  get_option('chatGPT_schedule_settings',array());
-          if(count($chatGPT_schedule_settings) > 0){
-            foreach ($chatGPT_schedule_settings['Pattern'] as $key => $value) {
-              if($value != 'once'){
-                $tax_slug = $chatGPT_schedule_settings['tax_slug'][$key];
-                $term_ids = get_terms($tax_slug, array('fields' => 'ids') );
-                $pid = wp_insert_post(array('post_title'=>$chatGPT_schedule_settings['Primary_Keyword'][$key],'post_status'=>$chatGPT_schedule_settings['post_status'][$key]));
-                wp_set_object_terms($pid,$term_ids,$tax_slug);
+        if(count($chatGPT_schedule_settings) > 0){
+          foreach ($chatGPT_schedule_settings['Pattern'] as $key => $value) {
+            if($value != 'once'){
+              $concern_terms = array();
+              $tax_slug = $chatGPT_schedule_settings['tax_slug'][$key];
+              $term_ids = get_terms($tax_slug, array('fields' => 'ids') );
+              $settings_tids = $chatGPT_schedule_settings['taxonomy_terms'][$key];
+              $settings_tids = is_array($settings_tids) ? $settings_tids : array();
+              if(isset($term_ids[0])){
+                foreach ($term_ids as $key => $term_id) {
+                  if(array_search($term_id,$settings_tids)!==false)
+                  $concern_terms[]=$term_id;
+                }
               }
+              $pid = wp_insert_post(array('post_type'=>$chatGPT_schedule_settings['Post_Type'][$key],'post_title'=>$chatGPT_schedule_settings['Primary_Keyword'][$key],'post_status'=>$chatGPT_schedule_settings['post_status'][$key]));
+
+              if(isset($concern_terms[0]))
+              wp_set_object_terms($pid,$concern_terms,$tax_slug);
             }
           }
+        }
       }
 
 
@@ -125,10 +200,21 @@
           if(count($chatGPT_schedule_settings) > 0){
             foreach ($chatGPT_schedule_settings['Pattern'] as $key => $value) {
               if($value == 'once'){
+                $concern_terms = array();
                 $tax_slug = $chatGPT_schedule_settings['tax_slug'][$key];
                 $term_ids = get_terms($tax_slug, array('fields' => 'ids') );
-                $pid = wp_insert_post(array('post_title'=>$chatGPT_schedule_settings['Primary_Keyword'][$key],'post_status'=>$chatGPT_schedule_settings['post_status'][$key]));
-                wp_set_object_terms($pid,$term_ids,$tax_slug);
+                $settings_tids = $chatGPT_schedule_settings['taxonomy_terms'][$key];
+                $settings_tids = is_array($settings_tids) ? $settings_tids : array();
+                if(isset($term_ids[0])){
+                  foreach ($term_ids as $key => $term_id) {
+                    if(array_search($term_id,$settings_tids)!==false)
+                    $concern_terms[]=$term_id;
+                  }
+                }
+                $pid = wp_insert_post(array('post_type'=>$chatGPT_schedule_settings['Post_Type'][$key],'post_title'=>$chatGPT_schedule_settings['Primary_Keyword'][$key],'post_status'=>$chatGPT_schedule_settings['post_status'][$key]));
+  
+                if(isset($concern_terms[0]))
+                wp_set_object_terms($pid,$concern_terms,$tax_slug);
               }
             }
           }
