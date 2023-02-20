@@ -12,9 +12,9 @@ class chatgpt_scheduler_Helper {
     }
     public function schedule_pattern_dropdown($selected=''){
         $patterns = array('once'=>'Once','cgpt_everyhour'=>'Repeat Hourly','cgpt_everyday'=>'Repeat Daily','cgpt_everytwelve_hour'=>'Repeat Twice Daily','cgpt_everyweek'=>'Repeat Weekly','cgpt_everymonth'=>'Repeat Monthly','cgpt_everyyear'=>'Repeat Yearly');
-        echo '<select name="chatGPT_schedule_settings[Pattern][]">';
-        foreach ($patterns as $pattern) {
-        echo '<option '.($selected == $pattern ? 'selected' : '').'  value="' . $pattern . '">' . $pattern . '</option>';
+        echo '<select name="chatGPT_schedule_settings[Pattern][]" class="Pattern">';
+        foreach ($patterns as $key=>$pattern) {
+        echo '<option '.($selected == $pattern ? 'selected' : '').'  value="' . $key . '">' . $pattern . '</option>';
         }
         echo '</select>';
     }
@@ -53,7 +53,7 @@ class chatgpt_scheduler_Helper {
                                 }
                             }
                         ?></span></td>
-                        <td><input type="time" name="chatGPT_schedule_settings[time][]" value="<?php echo $chatGPT_schedule_settings['time'][$index]?>" /></td>
+                        <td><input type="datetime-local" name="chatGPT_schedule_settings[time][]" class="time" value="<?php echo $chatGPT_schedule_settings['time'][$index]?>" /></td>
                         <td><?php echo $this->schedule_pattern_dropdown($chatGPT_schedule_settings['Pattern'][$index])?></td>
                         <td><?php echo $this->schedule_post_status_dropdown($chatGPT_schedule_settings['post_status'][$index])?></td>
                         <td><span id="ChatGPT_scheduler_copy_<?php echo $index?>" class="dashicons dashicons-dismiss remove_record"></span></td>

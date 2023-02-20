@@ -8,6 +8,7 @@ class ChatGPT_scheduler_ajax{
     }
     function get_taxonomy_callback() {
         $post_type = $_POST['post_type'];
+        $rowindex = $_POST['row_index'];
         $taxonomies = get_taxonomies(array('object_type' => array($post_type),'public'=>true),'objects');
         foreach ($taxonomies as $taxonomy) {
             $taxonomy_label = $taxonomy->label;
@@ -17,7 +18,7 @@ class ChatGPT_scheduler_ajax{
         }
 
         $taxonomy_terms = get_terms($taxonomy_slug,array('hide_empty'=>0));
-        if(isset($taxonomy_terms[0])){
+        if($taxonomy_slug && isset($taxonomy_terms[0])){
             foreach ($taxonomy_terms as $key => $value)
               $tax_terms_html .= '<div><input type="checkbox" name="chatGPT_schedule_settings[taxonomy_terms][]" value="'.($value->term_id).'" /> '.($value->name).'</div>';
         }
