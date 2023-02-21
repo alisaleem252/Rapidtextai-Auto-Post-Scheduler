@@ -38,7 +38,7 @@ class ChatGPTScheduler_Settings_Page {
                     //if($value == 'once' && !wp_next_scheduled( 'cgpt_single_event_cron_schedule_event'))
                         wp_schedule_single_event( strtotime($chatGPT_schedule_settings['time'][$key]), 'chatgpt_cron_schedules_schedule_it',array($value,$key));
                 } // foreach
-        echo '<pre>';print_r($_POST);echo '</pre>';
+        //echo '<pre>';print_r($_POST);echo '</pre>';
 
         } // if(isset($_POST['noncetoken_name_chatGPT_schedule_settings
         $chatGPT_schedule_settings =  get_option('chatGPT_schedule_settings',array());
