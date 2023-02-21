@@ -35,7 +35,7 @@ if ( ! defined( 'WPINC' ) ) {
 define( 'PLUGIN_VERSION', '1.6.1' );
 define('chatgpt_scheduler_URL', plugin_dir_url(__FILE__));
 define('chatgpt_scheduler_PATH', dirname(__FILE__));
-define('chatgpt_scheduler_network', 'https://gigsix/com/openai/');
+define('chatgpt_scheduler_network', 'https://gigsix.com/openai/');
 
 require_once(chatgpt_scheduler_PATH.'/inc/helper.php');
 require_once(chatgpt_scheduler_PATH.'/inc/settings.php');

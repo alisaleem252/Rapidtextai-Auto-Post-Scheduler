@@ -38,6 +38,7 @@ class ChatGPTScheduler_Settings_Page {
                     //if($value == 'once' && !wp_next_scheduled( 'cgpt_single_event_cron_schedule_event'))
                         wp_schedule_single_event( strtotime($chatGPT_schedule_settings['time'][$key]), 'chatgpt_cron_schedules_schedule_it',array($value,$key));
                 } // foreach
+        echo '<pre>';print_r($_POST);echo '</pre>';
 
         } // if(isset($_POST['noncetoken_name_chatGPT_schedule_settings
         $chatGPT_schedule_settings =  get_option('chatGPT_schedule_settings',array());
@@ -52,6 +53,7 @@ class ChatGPTScheduler_Settings_Page {
         $time_0 = isset($chatGPT_schedule_settings['time'][0]) ? $chatGPT_schedule_settings['time'][0] : '';
         $Pattern_0 = isset($chatGPT_schedule_settings['Pattern'][0]) ? $chatGPT_schedule_settings['Pattern'][0] : '';
         $post_status_0 = isset($chatGPT_schedule_settings['post_status'][0]) ? $chatGPT_schedule_settings['post_status'][0] : '';
+        $Temperature_0 = isset($chatGPT_schedule_settings['Temperature'][0]) ? $chatGPT_schedule_settings['Temperature'][0] : '';
 
    
         ?>
@@ -62,7 +64,8 @@ class ChatGPTScheduler_Settings_Page {
                 <table id="wrapper_content" class="wp-list-table widefat striped ChatGPT_scheduler_Table">
                     <tr>
                         <th>Prompt Type</th>
-                        <th>Prompt</th>
+                        <th>Topic</th>
+                        <th>Temperature</th>
                         <th>Template Posts</td>
                         <th>Schedule Time</th>
                         <th>Schedule Pattern</th>
@@ -72,6 +75,7 @@ class ChatGPTScheduler_Settings_Page {
                     <tr id="copy_content">
                         <td>ChatGPT</td>
                         <td><input type="text" name="chatGPT_schedule_settings[Primary_Keyword][]" class="Primary_Keyword" value="<?php echo $Primary_Keyword_0?>" /></td>
+                        <td><input class="range-slider__range" name="chatGPT_schedule_settings[Temperature][]" type="range" value="<?php echo $Temperature_0?>" min="0" max="1" step="0.1" /><span class="range-slider__value"><?php echo $Temperature_0?></span></td>
                         <td><?php echo $helper->get_template_posts_dropdown($Template_Post_0)?></td>
                         <td><input type="datetime-local" class="time" name="chatGPT_schedule_settings[time][]" value="<?php echo $time_0?>" /></td>
                         <td><?php echo $helper->schedule_pattern_dropdown($Pattern_0)?></td>

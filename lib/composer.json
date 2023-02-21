@@ -1,0 +1,10 @@
+{
+    "require": {
+        "php-curl-class/php-curl-class": "^9.13"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

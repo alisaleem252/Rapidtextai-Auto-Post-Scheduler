@@ -48,6 +48,7 @@ class chatgpt_scheduler_Helper {
                     <tr>
                         <td>ChatGPT</td>
                         <td><input type="text" name="chatGPT_schedule_settings[Primary_Keyword][]" class="Primary_Keyword" value="<?php echo $chatGPT_schedule_settings['Primary_Keyword'][$index]?>" /></td>
+                        <td><input type="range" name="chatGPT_schedule_settings[Temperature][]" class="range-slider__range" value="<?php echo $chatGPT_schedule_settings['Temperature'][$index]?>" min="0" max="1" step="0.1" /> <span class="range-slider__value"><?php echo $chatGPT_schedule_settings['Temperature'][$index]?></span></td>
                         <td><?php echo $this->get_template_posts_dropdown( $chatGPT_schedule_settings['Template_Post'][$index])?></td>
                         <td><input type="datetime-local" name="chatGPT_schedule_settings[time][]" class="time" value="<?php echo $chatGPT_schedule_settings['time'][$index]?>" /></td>
                         <td><?php echo $this->schedule_pattern_dropdown($chatGPT_schedule_settings['Pattern'][$index])?></td>

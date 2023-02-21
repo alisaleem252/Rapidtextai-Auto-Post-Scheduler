@@ -1,4 +1,7 @@
 <?php
+require chatgpt_scheduler_PATH.'/lib/vendor/autoload.php';
+use Curl\Curl;
+
   class ChatGPT_Cron_Schedules{
       function __construct(){
         add_filter( 'cron_schedules', array($this,'cron_schedules_CBF'));
@@ -45,13 +48,18 @@
           $time=$chatGPT_schedule_settings['time'][$key];
           $Pattern=$chatGPT_schedule_settings['Pattern'][$key];
           $post_status=$chatGPT_schedule_settings['post_status'][$key];
+          $Temperature=$chatGPT_schedule_settings['Temperature'][$key];
           
-
-
-          $title = 'Generated using API';
-          $content = 'Generated Using API';
-          update_option('pkl_time'.time(),$key.$Template_Post.$post_title.$content.$post_status);
-          $new_post_id = $helper->duplicate_post($Template_Post,$title,$content,$post_status);
+          if(isset($ChatGPTScheduler_settings_CBF['key']) && trim($ChatGPTScheduler_settings_CBF['key']) !='' && trim($ChatGPTScheduler_settings_CBF['token']) !=''){
+            $curl = new Curl();
+            $curl->post(chatgpt_scheduler_network.'content?gigsixkey='.$ChatGPTScheduler_settings_CBF['key'].'&token='.$ChatGPTScheduler_settings_CBF['token'],array("type"=>"intro", "description"=>$Primary_Keyword,"temperature"=>$Temperature));
+            if (isset($curl->response->content)){
+                $result = $curl->response->content;
+                $title = $Primary_Keyword;
+                $content = $result;
+                $new_post_id = $helper->duplicate_post($Template_Post,$title,$content,$post_status);
+            }
+          }
 
       }
 /*
