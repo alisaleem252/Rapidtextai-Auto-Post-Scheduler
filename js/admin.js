@@ -24,23 +24,6 @@ jQuery(document).ready(function($) {
       });
     });
 
-    
-    $('.Pattern').each(function(i,v){
-      if($(this).val()=='once')
-        $(this).parent().parent().find('.time').attr('style','display:inline');
-      else
-        $(this).parent().parent().find('.time').attr('style','display:none');    
-    });
-    
-    $(document.body).off('change', '.Pattern').on('change', '.Pattern',function(e) {
-      var thisvar = $(this);
-      if($(this).val()=='once')
-        $(thisvar).parent().parent().find('.time').attr('style','display:inline');
-      else
-        $(thisvar).parent().parent().find('.time').attr('style','display:none');
-    });
-
-
     $(document.body).off('click', '.add_record').on('click', '.add_record',function(e) {     
       var copy_content = $('#copy_content').html();
      $('#wrapper_content').append('<tr>'+copy_content+'</tr>');
@@ -49,6 +32,28 @@ jQuery(document).ready(function($) {
     $(document.body).off('click', '.remove_record').on('click', '.remove_record',function(e) {     
       $(this).parent().parent().remove();
     });
+
+    $(document.body).off('mousemove', '.range-slider__range').on('mousemove', '.range-slider__range',function(e) {     
+      var slider = $(this);
+      var output = $(this).next();
+
+      $(output).text(slider.val());
+      
+      //output.innerHTML = slider.value;
+      
+      // This function input current value in span and add progress colour in range
+      slider.oninput = function() {
+      
+        output.innerHTML = this.value;
+      
+        var value = (this.value-this.min)/(this.max-this.min)*100;
+        
+        this.style.background = 'linear-gradient(to right, #82CFD0 0%, #82CFD0 ' + value + '%, #d7dcdf ' + value + '%, #d7dcdf 100%)'
+      }
+    });
+
+  
+
 
   });
 
