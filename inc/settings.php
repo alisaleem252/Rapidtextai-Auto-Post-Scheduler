@@ -8,8 +8,7 @@ class ChatGPTScheduler_Settings_Page {
 
     public function enqueue_custom_styles() {
         wp_enqueue_script( 'adminchatgpt', gigsix_chatgpt_scheduler_URL.'/js/admin.js?v=4.11', array('jquery'));
-        wp_enqueue_script( 'adminchatgptTyped', 'https://cdnjs.cloudflare.com/ajax/libs/typed.js/1.1.4/typed.min.js', array('jquery'));
-        
+        wp_enqueue_script( 'adminchatgptTyped', gigsix_chatgpt_scheduler_URL.'/js/typed.min.js', array('jquery'));
         wp_enqueue_style( 'adminchatgpt_css',gigsix_chatgpt_scheduler_URL.'/css/admin.css');
     }
                         
@@ -60,22 +59,22 @@ class ChatGPTScheduler_Settings_Page {
    
         ?>
 		<div class="wrap">
-			<h1>ChatGPT Scheduler</h1>
+			<h1><?php _e('ChatGPT Scheduler','gigsix_chatgpt_scheduler') ?></h1>
             <?php echo $message?>
             <form name="chatGPT_schedule_settings" id="chatGPT_schedule_settings" method="POST">
                 <table id="wrapper_content" class="wp-list-table widefat striped ChatGPT_scheduler_Table">
                     <tr>
-                        <th>Prompt Type</th>
-                        <th>Topic</th>
-                        <th>Temperature</th>
-                        <th>Template Posts</td>
-                        <th>Schedule Time</th>
-                        <th>Schedule Pattern</th>
-                        <th>Post Status</th>
-                        <th>Add/ Remove</th>
+                        <th><?php _e('Prompt Type','gigsix_chatgpt_scheduler') ?></th>
+                        <th><?php _e('Topic','gigsix_chatgpt_scheduler') ?></th>
+                        <th><?php _e('Temperature','gigsix_chatgpt_scheduler') ?></th>
+                        <th><?php _e('Template Posts','gigsix_chatgpt_scheduler') ?></td>
+                        <th><?php _e('Schedule Time','gigsix_chatgpt_scheduler') ?></th>
+                        <th><?php _e('Schedule Pattern','gigsix_chatgpt_scheduler') ?></th>
+                        <th><?php _e('Post Status','gigsix_chatgpt_scheduler') ?></th>
+                        <th><?php _e('Add/ Remove','gigsix_chatgpt_scheduler') ?></th>
                     </tr>
                     <tr id="copy_content">
-                        <td>ChatGPT</td>
+                        <td><?php _e('ChatGPT','gigsix_chatgpt_scheduler') ?></td>
                         <td><input type="text" name="chatGPT_schedule_settings[Primary_Keyword][]" class="Primary_Keyword" value="<?php echo $Primary_Keyword_0?>" /></td>
                         <td><input class="range-slider__range" name="chatGPT_schedule_settings[Temperature][]" type="range" value="<?php echo $Temperature_0?>" min="0" max="1" step="0.1" /><span class="range-slider__value"><?php echo $Temperature_0?></span></td>
                         <td><?php echo $helper->get_template_posts_dropdown($Template_Post_0)?></td>
@@ -91,7 +90,7 @@ class ChatGPTScheduler_Settings_Page {
                 </table>
                 
                 <p>
-                    <input type="submit" name="chatGPT_schedule_settings_submitBtn" value="Save Settings" class="button button-primary" />
+                    <input type="submit" name="chatGPT_schedule_settings_submitBtn" value="<?php _e('Save Settings','gigsix_chatgpt_scheduler') ?>" class="button button-primary" />
                 </p>
                 <?php wp_nonce_field( 'noncetoken_chatGPT_schedule_settings', 'noncetoken_name_chatGPT_schedule_settings' );?>
         </form>
@@ -109,11 +108,11 @@ class ChatGPTScheduler_Settings_Page {
       
       
         ?>
-    <h1>Settings</h1>
+    <h1><?php _e('Settings','gigsix_chatgpt_scheduler') ?></h1>
     <form name="ChatGPTScheduler_settings_CBF" method="POST">
         <table class="form-table" role="presentation">
             <tr>
-                <th>Gigsix Connect Key</th>
+                <th><?php _e('Gigsix Connect Key','gigsix_chatgpt_scheduler') ?></th>
                 <td><input name="ChatGPTScheduler_settings_CBF[key]" type="text" value="<?php echo (isset($ChatGPTScheduler_settings_CBF['key']) ? $ChatGPTScheduler_settings_CBF['key'] : '')?>" class="regular-text" /></td>
             </tr>
         </table>

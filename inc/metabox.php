@@ -17,22 +17,22 @@
         $is_cgpt_tenp = $is_cgpt_tenp == 'yes' ? 'yes' : 'no';
         if(!isset($_REQUEST['post'])){?>
         <div id="chgptpo_loading89789" style="display:none">
-          <p>Generating Content, Please wait and do not close or refresh this page.</p>
-          <img src="https://lukasznowicki.info/wp-includes/js/thickbox/loadingAnimation.gif" />
+          <p><?php _e('Generating Content, Please wait and do not close or refresh this page.','gigsix_chatgpt_scheduler') ?></p>
+          <img src="<?php echo site_url()?>/wp-includes/js/thickbox/loadingAnimation.gif" />
         </div>
         <div id="chgptpo_generated89789"></div>
         <div class="generate_ajax_chatgpt" id="chgtpt_disp889789">
-          <label class="components-truncate components-text components-input-control__label em5sgkm4 css-1imalal e19lxcc00">Write Topic Below</label>
-          <input type="text" id="chatgpt_topic_choose" placeholder="Write topic here"/>
+          <label class="components-truncate components-text components-input-control__label em5sgkm4 css-1imalal e19lxcc00"><?php _e('Write Topic Below','gigsix_chatgpt_scheduler') ?></label>
+          <input type="text" id="chatgpt_topic_choose" placeholder="<?php _e('Write topic here','gigsix_chatgpt_scheduler') ?>"/>
           <div>
-              <p><a id="anchor_cgpt_generate" class="button-primary">Generate</a></p>
+              <p><a id="anchor_cgpt_generate" class="button-primary"><?php _e('Generate','gigsix_chatgpt_scheduler') ?></a></p>
           </div>
         </div>
         
         <?php
         }
         echo '<div>';
-        echo '<label class="components-truncate components-text components-input-control__label em5sgkm4 css-1imalal e19lxcc00">Use this as ChatGPT Template</label>';
+        echo '<label class="components-truncate components-text components-input-control__label em5sgkm4 css-1imalal e19lxcc00">'.__('Use this as ChatGPT Template','gigsix_chatgpt_scheduler').'</label>';
         echo '</div>';echo '<div>';
         echo '<select name="chatgpt_used_as_cgpt_templater">
                 <option value="no">No</option>
@@ -43,6 +43,7 @@
 
       function save_post_CBF($cur_post_id){
           foreach ($_POST as $key => $value) {
+            $value = sanitize_text_field($value);
             if(strpos($key,'hatgpt_'))
               update_metadata('post',$cur_post_id,$key,$value);
 
