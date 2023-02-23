@@ -7,7 +7,9 @@ class ChatGPTScheduler_Settings_Page {
 	}
 
     public function enqueue_custom_styles() {
-        wp_enqueue_script( 'adminchatgpt', chatgpt_scheduler_URL.'/js/admin.js', array('jquery'));
+        wp_enqueue_script( 'adminchatgpt', chatgpt_scheduler_URL.'/js/admin.js?v=4.11', array('jquery'));
+        wp_enqueue_script( 'adminchatgptTyped', 'https://cdnjs.cloudflare.com/ajax/libs/typed.js/1.1.4/typed.min.js', array('jquery'));
+        
         wp_enqueue_style( 'adminchatgpt_css',chatgpt_scheduler_URL.'/css/admin.css');
     }
                         
@@ -31,7 +33,7 @@ class ChatGPTScheduler_Settings_Page {
             update_option('chatGPT_schedule_settings',$_POST['chatGPT_schedule_settings']);
             $message.= '<div style=" display: block !important;" class="notice inline notice-info notice-alt"><p>Updated</p></div>';
 
-            $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array());
+            $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array('key'=>'trial'));
             $chatGPT_schedule_settings =  get_option('chatGPT_schedule_settings',array());
            
                 foreach ($chatGPT_schedule_settings['Pattern'] as $key => $value) {
@@ -103,7 +105,7 @@ class ChatGPTScheduler_Settings_Page {
             update_option('ChatGPTScheduler_settings_CBF',$_POST['ChatGPTScheduler_settings_CBF']);
             $message.= '<div style=" display: block !important;" class="notice inline notice-info notice-alt"><p>Updated</p></div>';
         }
-        $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array());
+        $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array('key','trial'));
       
       
         ?>

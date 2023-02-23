@@ -39,6 +39,6 @@ define('chatgpt_scheduler_network', 'https://gigsix.com/openai/');
 
 require_once(chatgpt_scheduler_PATH.'/inc/helper.php');
 require_once(chatgpt_scheduler_PATH.'/inc/settings.php');
-//require_once(chatgpt_scheduler_PATH.'/inc/ajax.php');
+require_once(chatgpt_scheduler_PATH.'/inc/ajax.php');
 require_once(chatgpt_scheduler_PATH.'/inc/metabox.php');
 require_once(chatgpt_scheduler_PATH.'/inc/cron_schedules.php');

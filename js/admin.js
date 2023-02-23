@@ -59,6 +59,51 @@ jQuery(document).ready(function($) {
 
   
   jQuery(document).ready(function($) {
+    jQuery(document.body).on('click','#anchor_cgpt_generate',function(e){
+      e.preventDefault();
+      var topic = jQuery('#chatgpt_topic_choose').val();
+      if(topic == ''){
+        alert('Topic Cannot be empty');
+        return;
+      }
+      $.ajax({
+          url:ajaxurl,
+          dataType:'json',
+          data:{
+            "action": "chatGPT_Gigsix_content", 
+            "topic": topic
+          },
+          beforeSend:function(){ jQuery('#chgtpt_disp889789').hide();jQuery('#chgptpo_loading89789').show();},
+          complete:function(response){ 
+                              jQuery('#chgptpo_loading89789').hide();
+                            },
+          success:function(response){  
+              if(response.error){
+                  jQuery('#chgtpt_disp889789').show();jQuery('#chgptpo_loading89789').hide();
+              }
+              else {
+                Cgpt_typeWriter('.editor-post-title',response.title);
+                //jQuery('.block-editor-default-block-appender__content').html(response.content);
+                // Insert text into the block's content
+                // Get the current block editor instance
+                const { dispatch } = wp.data;
+
+                // Insert a new paragraph block with custom text
+                const newText = response.content;
+                const newBlock = wp.blocks.createBlock('core/paragraph', {
+                  content: newText,
+                });
+
+                // Add the new block to the editor
+                dispatch('core/editor').insertBlock(newBlock);
+                jQuery('#chgptpo_generated89789').html(response.content.length+' Characters Generated');
+            }
+          },
+          error:function(){ jQuery('#chgtpt_disp889789').show();jQuery('#chgptpo_loading89789').hide();}
+      }); 
+      
+
+    })
     $('#ChatGPT_taxonomies_select').change(function() {
       var taxonomy = $(this).val();
       $.ajax({
@@ -82,3 +127,12 @@ jQuery('#ChatGPT_scheduler_copy').on('click',function(){
 jQuery('#ChatGPT_scheduler_remove').on('click',function(){
     jQuery(this).parent().remove();
 });
+function Cgpt_typeWriter(elmelm,txt) {
+  //setTimeout(function() {
+    jQuery(elmelm).typed({
+      strings: [txt],
+      typeSpeed: 1,
+      contentType: 'html'
+    });
+  //}, 500);
+}

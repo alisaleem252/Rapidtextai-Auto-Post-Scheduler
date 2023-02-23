@@ -41,7 +41,7 @@ use Curl\Curl;
       }
       function cgpt_cron_schedule_eventCBF($pattern, $key){
         $helper = new chatgpt_scheduler_Helper;
-        $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array());
+        $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array('key'=>'trial'));
           $chatGPT_schedule_settings =  get_option('chatGPT_schedule_settings',array());
           $Primary_Keyword=$chatGPT_schedule_settings['Primary_Keyword'][$key];
           $Template_Post=$chatGPT_schedule_settings['Template_Post'][$key];
@@ -52,10 +52,10 @@ use Curl\Curl;
           
           if(isset($ChatGPTScheduler_settings_CBF['key']) && trim($ChatGPTScheduler_settings_CBF['key']) !='' && trim($ChatGPTScheduler_settings_CBF['token']) !=''){
             $curl = new Curl();
-            $curl->post(chatgpt_scheduler_network.'content?gigsixkey='.$ChatGPTScheduler_settings_CBF['key'].'&token='.$ChatGPTScheduler_settings_CBF['token'],array("type"=>"intro", "description"=>$Primary_Keyword,"temperature"=>$Temperature));
+            $curl->post(chatgpt_scheduler_network.'detailedcontent?gigsixkey='.$ChatGPTScheduler_settings_CBF['key'].'&token='.$ChatGPTScheduler_settings_CBF['token'],array("topic"=>$Primary_Keyword,"temperature"=>$Temperature));
             if (isset($curl->response->content)){
-                $result = $curl->response->content;
-                $title = $Primary_Keyword;
+                $result = $helper->process_content($curl->response);
+                $title = $curl->response->title;
                 $content = $result;
                 $new_post_id = $helper->duplicate_post($Template_Post,$title,$content,$post_status);
             }
