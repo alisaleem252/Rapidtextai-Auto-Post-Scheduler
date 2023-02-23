@@ -14,11 +14,11 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Gigsix ChatGPT Post Scheduler
- * Plugin URI:        https://gigsix.com/
+ * Plugin URI:        https://gigsix.com/clients
  * Description:       Generate AI Content for your WordPress Posts.
  * Version:           1.0
  * Author:            Alisaleem252 || Gigsix
- * Author URI:        https://gigsix.com/
+ * Author URI:        https://alisaleem252.com/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       gigsix_chatgpt_scheduler
