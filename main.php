@@ -13,7 +13,7 @@
  * @package           Gigsix_gigsix_chatgpt_scheduler
  *
  * @wordpress-plugin
- * Plugin Name:       Gigsix ChatGPT Scheduler
+ * Plugin Name:       Gigsix ChatGPT Post Scheduler
  * Plugin URI:        https://gigsix.com/
  * Description:       Generate AI Content for your WordPress Posts.
  * Version:           1.0
