@@ -7,10 +7,10 @@ class ChatGPTScheduler_Settings_Page {
 	}
 
     public function enqueue_custom_styles() {
-        wp_enqueue_script( 'adminchatgpt', chatgpt_scheduler_URL.'/js/admin.js?v=4.11', array('jquery'));
+        wp_enqueue_script( 'adminchatgpt', gigsix_chatgpt_scheduler_URL.'/js/admin.js?v=4.11', array('jquery'));
         wp_enqueue_script( 'adminchatgptTyped', 'https://cdnjs.cloudflare.com/ajax/libs/typed.js/1.1.4/typed.min.js', array('jquery'));
         
-        wp_enqueue_style( 'adminchatgpt_css',chatgpt_scheduler_URL.'/css/admin.css');
+        wp_enqueue_style( 'adminchatgpt_css',gigsix_chatgpt_scheduler_URL.'/css/admin.css');
     }
                         
 
@@ -28,7 +28,7 @@ class ChatGPTScheduler_Settings_Page {
     
 	public function wph_settings_content() { 
         $message;
-        $helper = new chatgpt_scheduler_Helper;
+        $helper = new gigsix_chatgpt_scheduler_Helper;
         if(isset($_POST['noncetoken_name_chatGPT_schedule_settings']) && wp_verify_nonce($_POST['noncetoken_name_chatGPT_schedule_settings'],'noncetoken_chatGPT_schedule_settings') && isset($_POST['chatGPT_schedule_settings_submitBtn']) ){
             update_option('chatGPT_schedule_settings',$_POST['chatGPT_schedule_settings']);
             $message.= '<div style=" display: block !important;" class="notice inline notice-info notice-alt"><p>Updated</p></div>';
@@ -116,10 +116,6 @@ class ChatGPTScheduler_Settings_Page {
                 <th>Gigsix Connect Key</th>
                 <td><input name="ChatGPTScheduler_settings_CBF[key]" type="text" value="<?php echo (isset($ChatGPTScheduler_settings_CBF['key']) ? $ChatGPTScheduler_settings_CBF['key'] : '')?>" class="regular-text" /></td>
             </tr>
-            <tr>
-                <th>OPENAI Token</th>
-                <td><input name="ChatGPTScheduler_settings_CBF[token]" type="text" value="<?php echo (isset($ChatGPTScheduler_settings_CBF['token']) ? $ChatGPTScheduler_settings_CBF['token'] : '')?>" class="regular-text" /></td>
-            </tr>
         </table>
         <?php wp_nonce_field( 'noncetoken_chatGPT_schedule_settings', 'noncetoken_name_chatGPT_schedule_settings' );?>
         <p>
@@ -131,4 +127,3 @@ class ChatGPTScheduler_Settings_Page {
     
 }//class
 new ChatGPTScheduler_Settings_Page();
-                

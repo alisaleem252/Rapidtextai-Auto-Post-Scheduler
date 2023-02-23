@@ -6,7 +6,8 @@
       }
 
       function add_meta_boxes_CBF(){
-         add_meta_box('chatgpt_cb_metabox_id', __('ChatGPT Scheduler','chatgpt_cb_metabox_id_option'),array(&$this,'chatgpt_cb_metabox_idCBF'),'post','side');
+        $post_types = get_post_types(array('public' => true));
+         add_meta_box('chatgpt_cb_metabox_id', __('ChatGPT Scheduler','chatgpt_cb_metabox_id_option'),array(&$this,'chatgpt_cb_metabox_idCBF'),$post_types,'side');
 
       }
 

@@ -1,19 +1,18 @@
 <?php
-require chatgpt_scheduler_PATH.'/lib/vendor/autoload.php';
+require gigsix_chatgpt_scheduler_PATH.'/lib/vendor/autoload.php';
 use Curl\Curl;
-add_action('init',function(){
-    //$n = new chatgpt_scheduler_Helper;
-    //echo $n->gigsix_content('On Page SEO',0.7);
-    //exit;
-});
-class chatgpt_scheduler_Helper {
+
+class gigsix_chatgpt_scheduler_Helper {
     public function gigsix_content($topic,$temprature){
         $curl = new Curl();
         $curl->disableTimeout();
             $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array('key'=>'trial'));
-            $curl->post(chatgpt_scheduler_network.'detailedarticle/?gigsixkey='.$ChatGPTScheduler_settings_CBF['key'].'&token='.$ChatGPTScheduler_settings_CBF['token'],array("topic"=>$topic,"temperature"=>$temprature));
+            if($ChatGPTScheduler_settings_CBF['key'] == 'trial')
+            $curl->post(gigsix_chatgpt_scheduler_network.'trial/?gigsixkey=trial',array("topic"=>$topic,"temperature"=>$temprature));
+            else
+            $curl->post(gigsix_chatgpt_scheduler_network.'detailedarticle/?gigsixkey='.$ChatGPTScheduler_settings_CBF['key'],array("topic"=>$topic,"temperature"=>$temprature));
             if(isset($curl->response->content)){
-                $content = $this->process_content($curl->response);
+                $content = $curl->response->headings ? $this->process_content($curl->response) : $curl->response->content;
                 $title = $curl->response->title;
                 $result = array('title'=>$title,'content'=>$content);
             }
@@ -28,8 +27,8 @@ class chatgpt_scheduler_Helper {
         $paras =$content_array->paragraphs;
         $intro ='<p>'.$content_array->intro.'</p>';
         foreach($content_array->headings as $k => $headings){
-            $context.='<li><a href="#section_"'.$k.'>'.$headings.'</a></li>';
-            $main_content.='<h2 id=""#section_"'.$k.'">'.$headings.'</h2>';
+            $context.='<li><a href="#section_'.$k.'">'.$headings.'</a></li>';
+            $main_content.='<h2 id="#section_'.$k.'">'.$headings.'</h2>';
             $main_content.='<p>'.$paras[$k].'</p>';
         }
         $context.='</ul>';

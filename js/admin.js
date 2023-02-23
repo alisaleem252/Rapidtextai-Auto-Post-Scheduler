@@ -79,23 +79,28 @@ jQuery(document).ready(function($) {
                             },
           success:function(response){  
               if(response.error){
-                  jQuery('#chgtpt_disp889789').show();jQuery('#chgptpo_loading89789').hide();
+                  jQuery('#chgtpt_disp889789').show();
+                  jQuery('#chgptpo_loading89789').hide();
               }
               else {
-                Cgpt_typeWriter('.editor-post-title',response.title);
+                if (typeof wp !== 'undefined' && typeof wp.data !== 'undefined') {
+                  const { dispatch } = wp.data;
+                  // Insert a new paragraph block with custom text
+                  const newText = response.content;
+                  const newBlock = wp.blocks.createBlock('core/paragraph', {
+                    content: newText,
+                  });
+                  dispatch('core/editor').editPost({ title: response.title });
+                  // Add the new block to the editor
+                  dispatch('core/editor').insertBlock(newBlock);
+                }
+                else {
+                        // Classic Editor
+                }
+                //Cgpt_typeWriter('.editor-post-title',response.title);
                 //jQuery('.block-editor-default-block-appender__content').html(response.content);
                 // Insert text into the block's content
                 // Get the current block editor instance
-                const { dispatch } = wp.data;
-
-                // Insert a new paragraph block with custom text
-                const newText = response.content;
-                const newBlock = wp.blocks.createBlock('core/paragraph', {
-                  content: newText,
-                });
-
-                // Add the new block to the editor
-                dispatch('core/editor').insertBlock(newBlock);
                 jQuery('#chgptpo_generated89789').html(response.content.length+' Characters Generated');
             }
           },
