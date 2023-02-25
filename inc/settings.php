@@ -109,6 +109,20 @@ class ChatGPTScheduler_Settings_Page {
                 <th><?php _e('Gigsix Connect Key','gigsix_chatgpt_scheduler') ?></th>
                 <td><input name="ChatGPTScheduler_settings_CBF[key]" type="text" value="<?php echo (isset($ChatGPTScheduler_settings_CBF['key']) ? $ChatGPTScheduler_settings_CBF['key'] : '')?>" class="regular-text" /> <a target="_blank" href="https://gigsix.com/clients"><?php _e('Get Gigsix Connect Key','gigsix_chatgpt_scheduler') ?></a></td>                
             </tr>
+            <tr>
+                <th>About the AI Model</th>
+                <td>
+                <h2>GPT-3</h2>
+                <p>This models can understand and generate natural language. OpenAI offer four main models with different levels of power suitable for different tasks. Davinci is the most capable model, and Ada is the fastest.</p>
+                <p>text-davinci-003</p>
+                <p>Most capable GPT-3 model. Can do any task the other models can do, often with higher quality, longer output and better instruction-following</p>
+                <h3>Davinci</h3>
+
+                <p>Davinci is the most capable model family and can perform any task the other models can perform and often with less instruction. For applications requiring a lot of understanding of the content, like summarization for a specific audience and creative content generation, Davinci is going to produce the best results. These increased capabilities require more compute resources, so Davinci costs more per API call and is not as fast as the other models.<p>
+
+                <p>Another area where Davinci shines is in understanding the intent of text. Davinci is quite good at solving many kinds of logic problems and explaining the motives of characters. Davinci has been able to solve some of the most challenging AI problems involving cause and effect.</p>
+            </td>
+            </tr>
         </table>
         <?php wp_nonce_field( 'noncetoken_chatGPT_schedule_settings', 'noncetoken_name_chatGPT_schedule_settings' );?>
         <p>
