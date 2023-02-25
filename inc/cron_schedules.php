@@ -9,6 +9,10 @@ use Curl\Curl;
         add_action('chatgpt_cron_schedules_schedule_it',array($this,'schedule_it'),1,2);
       }
       public function schedule_it($pattern,$key){
+        $chatGPT_schedule_settings =  get_option('chatGPT_schedule_settings',array());
+        if($pattern == 'cgpt_single_event')
+        wp_schedule_single_event( strtotime($chatGPT_schedule_settings['time'][$key]), 'cgpt_all_event_cron_schedule_event',array($pattern,$key));
+        else
         wp_schedule_event( time(), $pattern, 'cgpt_all_event_cron_schedule_event',array($pattern,$key),true);
       }
 

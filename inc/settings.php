@@ -28,6 +28,7 @@ class ChatGPTScheduler_Settings_Page {
 	public function wph_settings_content() { 
         $message;
         $helper = new gigsix_chatgpt_scheduler_Helper;
+        $scheduler = new ChatGPT_Cron_Schedules;
         if(isset($_POST['noncetoken_name_chatGPT_schedule_settings']) && wp_verify_nonce($_POST['noncetoken_name_chatGPT_schedule_settings'],'noncetoken_chatGPT_schedule_settings') && isset($_POST['chatGPT_schedule_settings_submitBtn']) ){
             update_option('chatGPT_schedule_settings',$_POST['chatGPT_schedule_settings']);
             $message.= '<div style=" display: block !important;" class="notice inline notice-info notice-alt"><p>Updated</p></div>';
@@ -37,7 +38,8 @@ class ChatGPTScheduler_Settings_Page {
            
                 foreach ($chatGPT_schedule_settings['Pattern'] as $key => $value) {
                     //if($value == 'once' && !wp_next_scheduled( 'cgpt_single_event_cron_schedule_event'))
-                        wp_schedule_single_event( strtotime($chatGPT_schedule_settings['time'][$key]), 'chatgpt_cron_schedules_schedule_it',array($value,$key));
+                    $scheduler->schedule_it($value,$key);
+                    // wp_schedule_single_event( strtotime($chatGPT_schedule_settings['time'][$key]), 'chatgpt_cron_schedules_schedule_it',array($value,$key));
                 } // foreach
         //echo '<pre>';print_r($_POST);echo '</pre>';
 

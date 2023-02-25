@@ -5,7 +5,9 @@ Tags: chatgpt, schedule, auto posting, chatgpt3
 Requires at least: 4.2  
 Tested up to: 6.1  
 Stable tag: 1.15.1  
-Requires PHP: 5.6  
+Requires PHP: 5.6
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://gigsix.com/clients
 
 Gigsix ChatGPT Post Scheduler Lets to schedule your posting using ChatGPT3.
