@@ -10,8 +10,7 @@ class ChatGPTScheduler_Settings_Page {
         wp_enqueue_script( 'adminchatgpt', gigsix_chatgpt_scheduler_URL.'/js/admin.js?v=4.11', array('jquery'));
         wp_enqueue_script( 'adminchatgptTyped', gigsix_chatgpt_scheduler_URL.'/js/typed.min.js', array('jquery'));
         wp_enqueue_style( 'adminchatgpt_css',gigsix_chatgpt_scheduler_URL.'/css/admin.css');
-    }
-                        
+    }              
 
 	public function wph_create_settings() {
 		$page_title = 'ChatGPT Scheduler';
@@ -40,8 +39,6 @@ class ChatGPTScheduler_Settings_Page {
                 } // foreach
         } // if(isset($_POST['noncetoken_name_chatGPT_schedule_settings
         $chatGPT_schedule_settings =  get_option('chatGPT_schedule_settings',array());
-
-        //echo '<pre>';print_r($chatGPT_schedule_settings);echo '</pre>';
       
         $Primary_Keyword_0 = isset($chatGPT_schedule_settings['Primary_Keyword'][0]) ? $chatGPT_schedule_settings['Primary_Keyword'][0] : '';
         $Template_Post_0 = isset($chatGPT_schedule_settings['Template_Post'][0]) ? $chatGPT_schedule_settings['Template_Post'][0] : '';
@@ -110,7 +107,7 @@ class ChatGPTScheduler_Settings_Page {
         <table class="form-table" role="presentation">
             <tr>
                 <th><?php _e('Gigsix Connect Key','gigsix_chatgpt_scheduler') ?></th>
-                <td><input name="ChatGPTScheduler_settings_CBF[key]" type="text" value="<?php echo (isset($ChatGPTScheduler_settings_CBF['key']) ? $ChatGPTScheduler_settings_CBF['key'] : '')?>" class="regular-text" /></td>
+                <td><input name="ChatGPTScheduler_settings_CBF[key]" type="text" value="<?php echo (isset($ChatGPTScheduler_settings_CBF['key']) ? $ChatGPTScheduler_settings_CBF['key'] : '')?>" class="regular-text" /> <a target="_blank" href="https://gigsix.com/clients"><?php _e('Get Gigsix Connect Key','gigsix_chatgpt_scheduler') ?></a></td>                
             </tr>
         </table>
         <?php wp_nonce_field( 'noncetoken_chatGPT_schedule_settings', 'noncetoken_name_chatGPT_schedule_settings' );?>

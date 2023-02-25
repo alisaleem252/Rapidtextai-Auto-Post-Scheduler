@@ -25,11 +25,11 @@ Gigsix ChatGPT Auto Post Scheduler is a WordPress plugin that allows users to sc
 
 ## Installation
 
-1- Download the plugin zip file from the WordPress Plugin Directory.
-2- Upload the plugin to your WordPress site using the Plugins > Add New page.
-3- Activate the plugin through the Plugins menu in WordPress.
-4- Navigate to the plugin settings page and enter your Gigsix Connect Key from https://gigsix.com/clients .
-5- Start creating and scheduling your posts!
+*  Download the plugin zip file from the WordPress Plugin Directory.
+*  Upload the plugin to your WordPress site using the Plugins > Add New page.
+*  Activate the plugin through the Plugins menu in WordPress.
+*  Navigate to the plugin settings page and enter your Gigsix Connect Key from https://gigsix.com/clients .
+*  Start creating and scheduling your posts!
 
 
 ## Usage
