@@ -98,7 +98,7 @@ class ChatGPTScheduler_Settings_Page {
             update_option('ChatGPTScheduler_settings_CBF',$_POST['ChatGPTScheduler_settings_CBF']);
             $message.= '<div style=" display: block !important;" class="notice inline notice-info notice-alt"><p>Updated</p></div>';
         }
-        $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array('key','trial'));
+        $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array('key'=>'trial'));
       
       
         ?>
@@ -107,7 +107,7 @@ class ChatGPTScheduler_Settings_Page {
         <table class="form-table" role="presentation">
             <tr>
                 <th><?php _e('Gigsix Connect Key','gigsix_chatgpt_scheduler') ?></th>
-                <td><input name="ChatGPTScheduler_settings_CBF[key]" type="text" value="<?php echo (isset($ChatGPTScheduler_settings_CBF['key']) ? $ChatGPTScheduler_settings_CBF['key'] : '')?>" class="regular-text" /> <a target="_blank" href="https://gigsix.com/clients"><?php _e('Get Gigsix Connect Key','gigsix_chatgpt_scheduler') ?></a></td>                
+                <td><input name="ChatGPTScheduler_settings_CBF[key]" type="text" value="<?php echo (isset($ChatGPTScheduler_settings_CBF['key']) ? $ChatGPTScheduler_settings_CBF['key'] : 'trial')?>" class="regular-text" /> <a target="_blank" href="https://gigsix.com/clients"><?php _e('Get Gigsix Connect Key','gigsix_chatgpt_scheduler') ?></a></td>                
             </tr>
             <tr>
                 <th>About the AI Model</th>
