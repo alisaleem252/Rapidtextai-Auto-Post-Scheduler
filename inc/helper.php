@@ -28,7 +28,7 @@ class gigsix_chatgpt_scheduler_Helper {
         $intro ='<p>'.$content_array->intro.'</p>';
         foreach($content_array->headings as $k => $headings){
             $context.='<li><a href="#section_'.$k.'">'.$headings.'</a></li>';
-            $main_content.='<h2 id="#section_'.$k.'">'.$headings.'</h2>';
+            $main_content.='<h2 id="section_'.$k.'">'.$headings.'</h2>';
             $main_content.='<p>'.$paras[$k].'</p>';
         }
         $context.='</ul>';
