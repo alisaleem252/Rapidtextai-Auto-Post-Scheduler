@@ -113,9 +113,9 @@ class ChatGPTScheduler_Settings_Page {
                 <th>About the AI Model</th>
                 <td>
                 <h2>GPT-3</h2>
-                <p>This models can understand and generate natural language. OpenAI offer four main models with different levels of power suitable for different tasks. Davinci is the most capable model, and Ada is the fastest.</p>
-                <p>text-davinci-003</p>
-                <p>Most capable GPT-3 model. Can do any task the other models can do, often with higher quality, longer output and better instruction-following</p>
+                <p>GPT-3.5 models can understand and generate natural language or code. Our most capable and cost effective model in the GPT-3.5 family is gpt-3.5-turbo which has been optimized for chat but works well for traditional completions tasks as well.</p>
+                <p>gpt-3.5-turbo</p>
+                <p>Most capable GPT-3.5 model and optimized for chat at 1/10th the cost of text-davinci-003. Will be updated with our latest model iteration.</p>
                 <h3>Davinci</h3>
 
                 <p>Davinci is the most capable model family and can perform any task the other models can perform and often with less instruction. For applications requiring a lot of understanding of the content, like summarization for a specific audience and creative content generation, Davinci is going to produce the best results. These increased capabilities require more compute resources, so Davinci costs more per API call and is not as fast as the other models.<p>
