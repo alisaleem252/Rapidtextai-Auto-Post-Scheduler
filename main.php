@@ -32,7 +32,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 
 
-define( 'PLUGIN_VERSION', '1.0' );
+define( 'PLUGIN_VERSION', '1.1' );
 define('gigsix_chatgpt_scheduler_URL', plugin_dir_url(__FILE__));
 define('gigsix_chatgpt_scheduler_PATH', dirname(__FILE__));
 define('gigsix_chatgpt_scheduler_network', 'https://gigsix.com/openai/');
