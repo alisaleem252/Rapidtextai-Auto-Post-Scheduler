@@ -32,7 +32,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 
 
-define( 'PLUGIN_VERSION', '1.1' );
+define( 'gigsix_PLUGIN_VERSION', '1.1' );
 define('gigsix_chatgpt_scheduler_URL', plugin_dir_url(__FILE__));
 define('gigsix_chatgpt_scheduler_PATH', dirname(__FILE__));
 define('gigsix_chatgpt_scheduler_network', 'https://gigsix.com/openai/');
@@ -48,7 +48,7 @@ require_once(gigsix_chatgpt_scheduler_PATH.'/wp_autoupdate.php');
 
 add_action('init', 'chatgpt_update_plugin_version');
 function chatgpt_update_plugin_version(){
-	$plugin_current_version = '1.0';
+	$plugin_current_version = gigsix_PLUGIN_VERSION;
 	$plugin_remote_path     = 'https://gigsix.com/clients/plugin/update.php';
 	$plugin_slug            = plugin_basename(__FILE__);
 
