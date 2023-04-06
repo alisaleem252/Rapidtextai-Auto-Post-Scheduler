@@ -159,5 +159,28 @@ class gigsix_chatgpt_scheduler_Helper {
 	    return $new_post_id;
 	}
     }
+
+    /**
+	 * This function Logs all errors in the WordPress Facebook Ads Menu Text Area.
+	 * $log (string)
+	 * $append (bolean)
+	 */
+	function log($log,$append = true){
+		$logs = get_option('mam_fbads_debug');
+		if($append){
+			$logs.=date("Y/m/d h:i:sa") ."\r\n ".$log." \r\n";
+			update_option('mam_fbads_debug',$logs);
+			//echo '<pre>';
+			//print_r($logs);
+		}
+		else {
+			update_option('mam_fbads_debug',date("Y/m/d h:i:sa") ."\r\n ".$log." \r\n");
+		}
+		if(strlen($log) > 10000)
+
+			update_option('mam_fbads_debug','');
+			//
+
+	}
     
 }

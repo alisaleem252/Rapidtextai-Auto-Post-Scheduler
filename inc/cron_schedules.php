@@ -56,15 +56,17 @@ use Curl\Curl;
           
           if(isset($ChatGPTScheduler_settings_CBF['key']) && trim($ChatGPTScheduler_settings_CBF['key']) !=''){
             $curl = new Curl();
+            $curl->disableTimeout();
             if($ChatGPTScheduler_settings_CBF['key'] == 'trial')
             $curl->post(gigsix_chatgpt_scheduler_network.'trial?gigsixkey=trial',array("topic"=>$Primary_Keyword,"temperature"=>$Temperature));
             else
-            $curl->post(gigsix_chatgpt_scheduler_network.'detailedcontent?gigsixkey='.$ChatGPTScheduler_settings_CBF['key'],array("topic"=>$Primary_Keyword,"temperature"=>$Temperature));
+            $curl->post(gigsix_chatgpt_scheduler_network.'detailedarticle?gigsixkey='.$ChatGPTScheduler_settings_CBF['key'],array("topic"=>$Primary_Keyword,"temperature"=>$Temperature));
             if (isset($curl->response->content)){
                 $content = $curl->response->headings ? $this->process_content($curl->response) : $curl->response->content;
                 $title = $curl->response->title;
                 $new_post_id = $helper->duplicate_post($Template_Post,$title,$content,$post_status);
             }
+            $helper->log(print_r($curl,true));
           }
 
       }

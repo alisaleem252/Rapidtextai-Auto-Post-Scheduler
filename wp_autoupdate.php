@@ -60,8 +60,8 @@ class WP_AutoUpdate
 		$this->slug = str_replace( '.php', '', $t2 );		
 
 		// define the alternative API for updating checking
-		add_filter( 'site_transient_update_plugins', array( &$this, 'check_update' ) );
-		add_filter( 'transient_update_plugins', array( &$this, 'check_update' ) );
+		//add_filter( 'site_transient_update_plugins', array( &$this, 'check_update' ) );
+		//add_filter( 'transient_update_plugins', array( &$this, 'check_update' ) );
 		add_filter( 'pre_set_site_transient_update_plugins', array( &$this, 'check_update' ) );
 
 		// Define the alternative response for information checking

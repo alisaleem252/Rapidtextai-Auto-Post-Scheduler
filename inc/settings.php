@@ -62,7 +62,7 @@ class ChatGPTScheduler_Settings_Page {
                         <th><?php _e('Topic','gigsix_chatgpt_scheduler') ?></th>
                         <th><?php _e('Temperature','gigsix_chatgpt_scheduler') ?></th>
                         <th><?php _e('Template Posts','gigsix_chatgpt_scheduler') ?></td>
-                        <th><?php _e('Schedule Time','gigsix_chatgpt_scheduler') ?></th>
+                        <th><?php _e('Schedule Time ','gigsix_chatgpt_scheduler'); echo date('d/m/y h:i A') ?></th>
                         <th><?php _e('Schedule Pattern','gigsix_chatgpt_scheduler') ?></th>
                         <th><?php _e('Post Status','gigsix_chatgpt_scheduler') ?></th>
                         <th><?php _e('Add/ Remove','gigsix_chatgpt_scheduler') ?></th>
@@ -123,6 +123,10 @@ class ChatGPTScheduler_Settings_Page {
                 <p>Another area where Davinci shines is in understanding the intent of text. Davinci is quite good at solving many kinds of logic problems and explaining the motives of characters. Davinci has been able to solve some of the most challenging AI problems involving cause and effect.</p>
             </td>
             </tr>
+            <tr>
+                <th>Cron Debug</th>
+                <td><a href="?page=ChatGPTScheduler_settings&debug=1">Enable </a> | <a href="?page=ChatGPTScheduler_settings">Disable </a> </td>
+            </tr>
         </table>
         <?php wp_nonce_field( 'noncetoken_chatGPT_schedule_settings', 'noncetoken_name_chatGPT_schedule_settings' );?>
         <p>
@@ -130,6 +134,8 @@ class ChatGPTScheduler_Settings_Page {
         </p>
     </form>
 <?php
+    if(isset($_REQUEST['debug'])){
+    echo '<textarea rows="20" cols="150">'.get_option('mam_fbads_debug').'</textarea>';}
     }
     
 }//class
