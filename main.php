@@ -49,7 +49,7 @@ require_once(gigsix_chatgpt_scheduler_PATH.'/wp_autoupdate.php');
 add_action('init', 'chatgpt_update_plugin_version');
 function chatgpt_update_plugin_version(){
 	$plugin_current_version = '1.0';
-	$plugin_remote_path     = 'http://localhost/wp4/wp-content/plugins/Gigsix-ChatGPT-Post-Scheduler/update.php';
+	$plugin_remote_path     = 'https://gigsix.com/clients/plugin/update.php';
 	$plugin_slug            = plugin_basename(__FILE__);
 
 	$test = new WP_AutoUpdate ($plugin_current_version, $plugin_remote_path, $plugin_slug);
