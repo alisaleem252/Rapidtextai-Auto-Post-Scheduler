@@ -24,6 +24,21 @@
         <div class="generate_ajax_chatgpt" id="chgtpt_disp889789">
           <label class="components-truncate components-text components-input-control__label em5sgkm4 css-1imalal e19lxcc00"><?php _e('Write Topic Below','gigsix_chatgpt_scheduler') ?></label>
           <input type="text" id="chatgpt_topic_choose" placeholder="<?php _e('Write topic here','gigsix_chatgpt_scheduler') ?>"/>
+
+          <p>
+            <label><?php _e('Language?','gigsix_chatgpt_scheduler') ?></label>
+            <br /><input type="text" id="chatgpt_m_lang" name="chatgpt_m_lang" />
+          </p>
+
+          <p>
+            <label><?php _e('Temperature?','gigsix_chatgpt_scheduler') ?></label>
+            <br /><input type="text" id="chatgpt_m_temp" name="chatgpt_m_temp" />
+          </p>
+          <p>
+            <label><?php _e('Tone?','gigsix_chatgpt_scheduler') ?></label>
+            <br /><input type="text" id="chatgpt_m_tone" name="chatgpt_m_tone" />
+          </p>
+
           <div>
               <p><a id="anchor_cgpt_generate" class="button-primary"><?php _e('Generate','gigsix_chatgpt_scheduler') ?></a></p>
           </div>

@@ -10,10 +10,14 @@ class ChatGPT_scheduler_ajax{
     function Gigsix_content_ajax(){
       $n = new gigsix_chatgpt_scheduler_Helper;
       $topic = $_REQUEST['topic'];
-      echo json_encode($n->gigsix_content($topic,0.7));
+      $temp = $_REQUEST['temp'];
+      $tone = $_REQUEST['tone'];
+      $lang = $_REQUEST['lang'];
+      echo json_encode($n->gigsix_content($topic,$temp,$lang,$tone));
       die();
 
     }
+
     function get_taxonomy_callback() {
         $post_type = $_POST['post_type'];
         $rowindex = $_POST['row_index'];

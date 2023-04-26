@@ -62,6 +62,9 @@ jQuery(document).ready(function($) {
     jQuery(document.body).on('click','#anchor_cgpt_generate',function(e){
       e.preventDefault();
       var topic = jQuery('#chatgpt_topic_choose').val();
+      var lang = jQuery('#chatgpt_m_lang').val();
+      var temp = jQuery('#chatgpt_m_temp').val();
+      var tone = jQuery('#chatgpt_m_tone').val();
       if(topic == ''){
         alert('Topic Cannot be empty');
         return;
@@ -71,7 +74,7 @@ jQuery(document).ready(function($) {
           dataType:'json',
           data:{
             "action": "chatGPT_Gigsix_content", 
-            "topic": topic
+            "topic": topic,"lang":lang,"temp":temp,"tone":tone
           },
           beforeSend:function(){ jQuery('#chgtpt_disp889789').hide();jQuery('#chgptpo_loading89789').show();},
           complete:function(response){ 
