@@ -22,21 +22,43 @@
         </div>
         <div id="chgptpo_generated89789"></div>
         <div class="generate_ajax_chatgpt" id="chgtpt_disp889789">
+
           <label class="components-truncate components-text components-input-control__label em5sgkm4 css-1imalal e19lxcc00"><?php _e('Write Topic Below','gigsix_chatgpt_scheduler') ?></label>
           <input type="text" id="chatgpt_topic_choose" placeholder="<?php _e('Write topic here','gigsix_chatgpt_scheduler') ?>"/>
-
+          <div>&nbsp;</div>
           <p>
             <label><?php _e('Language?','gigsix_chatgpt_scheduler') ?></label>
-            <br /><input type="text" id="chatgpt_m_lang" name="chatgpt_m_lang" />
+            <br />
+            <select id="chatgpt_m_lang">
+              <option value="English">English</option>
+              <option value="Spanish">Spanish</option>
+              <option value="French">French</option>
+              <option value="German">German</option>
+              <option value="Italian">Italian</option>
+              <option value="Portuguese">Portuguese</option>
+              <option value="Dutch">Dutch</option>
+              <option value="Russian">Russian</option>
+              <option value="Chinese">Chinese</option>
+              <option value="Korean">Korean</option>
+            </select>
           </p>
 
           <p>
             <label><?php _e('Temperature?','gigsix_chatgpt_scheduler') ?></label>
-            <br /><input type="text" id="chatgpt_m_temp" name="chatgpt_m_temp" />
+            <br /><input type="number" max="1" min="0.1" step="0.1" id="chatgpt_m_temp" name="chatgpt_m_temp" />
           </p>
           <p>
             <label><?php _e('Tone?','gigsix_chatgpt_scheduler') ?></label>
-            <br /><input type="text" id="chatgpt_m_tone" name="chatgpt_m_tone" />
+            <br />
+              <select id="chatgpt_m_tone">
+                <option value="Professional">Professional</option>
+                <option value="Conversational">Conversational</option>
+                <option value="Humorous">Humorous</option>
+                <option value="Empathic">Empathic</option>
+                <option value="Simple">Simple</option>
+                <option value="Academic">Academic</option>
+                <option value="Creative">Creative</option>
+              </select>
           </p>
 
           <div>

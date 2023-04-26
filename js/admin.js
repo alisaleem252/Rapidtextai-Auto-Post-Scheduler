@@ -61,10 +61,11 @@ jQuery(document).ready(function($) {
   jQuery(document).ready(function($) {
     jQuery(document.body).on('click','#anchor_cgpt_generate',function(e){
       e.preventDefault();
+      jQuery('#content-html').click();
       var topic = jQuery('#chatgpt_topic_choose').val();
-      var lang = jQuery('#chatgpt_m_lang').val();
+      var lang = jQuery('#chatgpt_m_lang :selected').val();
       var temp = jQuery('#chatgpt_m_temp').val();
-      var tone = jQuery('#chatgpt_m_tone').val();
+      var tone = jQuery('#chatgpt_m_tone :selected').val();
       if(topic == ''){
         alert('Topic Cannot be empty');
         return;
@@ -81,12 +82,13 @@ jQuery(document).ready(function($) {
                               jQuery('#chgptpo_loading89789').hide();
                             },
           success:function(response){  
+            console.log(response);
               if(response.error){
                   jQuery('#chgtpt_disp889789').show();
                   jQuery('#chgptpo_loading89789').hide();
               }
               else {
-                if (typeof wp !== 'undefined' && typeof wp.data !== 'undefined') {
+                if (typeof wp !== 'undefined' && typeof wp.data !== 'undefined' && typeof wp.blocks !== 'undefined' && response.content.length) {
                   const { dispatch } = wp.data;
                   // Insert a new paragraph block with custom text
                   const newText = response.content;
@@ -98,8 +100,12 @@ jQuery(document).ready(function($) {
                   dispatch('core/editor').insertBlock(newBlock);
                 }
                 else {
-                        // Classic Editor
+                      jQuery('#content-html').click();
+                       jQuery('#title').val(response.title);
+                       jQuery('#title-prompt-text').text('');
+                       jQuery('.wp-editor-area').val(response.content);
                 }
+                
                 //Cgpt_typeWriter('.editor-post-title',response.title);
                 //jQuery('.block-editor-default-block-appender__content').html(response.content);
                 // Insert text into the block's content
