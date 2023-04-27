@@ -146,7 +146,7 @@ class gigsix_chatgpt_scheduler_Helper {
 
 			foreach ( $post_meta as $meta_key => $meta_values ) {
 
-				if( '_wp_old_slug' == $meta_key ) { // do nothing for this meta key
+				if( '_wp_old_slug' == $meta_key || 'chatgpt_used_as_cgpt_templater' == $meta_key) { // do nothing for this meta key
 					continue;
 				}
 
