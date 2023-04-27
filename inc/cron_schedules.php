@@ -65,6 +65,7 @@ use Curl\Curl;
                 $content = $curl->response->headings ? $helper->process_content($curl->response) : $curl->response->content;
                 $title = $curl->response->title;
                 $new_post_id = $helper->duplicate_post($Template_Post,$title,$content,$post_status);
+                update_metadata('post',$new_post_id,'chatgpt_used_as_cgpt_templater','no');
             }
             $helper->log(print_r($curl,true));
           }

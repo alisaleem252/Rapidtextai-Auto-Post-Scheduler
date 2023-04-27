@@ -55,3 +55,8 @@
   border-bottom: 7px solid transparent;
   content: "";
 }
+
+
+.chatGPT_schedule_settings_post_type{
+  width:200px;
+}
