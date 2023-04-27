@@ -3,14 +3,15 @@ require gigsix_chatgpt_scheduler_PATH.'/lib/vendor/autoload.php';
 use Curl\Curl;
 
 class gigsix_chatgpt_scheduler_Helper {
-    public function gigsix_content($topic,$temprature){
+    public function gigsix_content($topic,$temprature,$lang,$tone){
         $curl = new Curl();
         $curl->disableTimeout();
             $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array('key'=>'trial'));
             if($ChatGPTScheduler_settings_CBF['key'] == 'trial')
-            $curl->post(gigsix_chatgpt_scheduler_network.'trial/?gigsixkey=trial',array("topic"=>$topic,"temperature"=>$temprature));
+            $curl->post(gigsix_chatgpt_scheduler_network.'trial/?gigsixkey=trial',array("topic"=>$topic,"temperature"=>$temprature,"language"=>$lang,"tone"=>$tone));
             else
-            $curl->post(gigsix_chatgpt_scheduler_network.'detailedarticle/?gigsixkey='.$ChatGPTScheduler_settings_CBF['key'],array("topic"=>$topic,"temperature"=>$temprature));
+            $curl->post(gigsix_chatgpt_scheduler_network.'detailedarticle/?gigsixkey='.$ChatGPTScheduler_settings_CBF['key'],array("topic"=>$topic,"temperature"=>$temprature,"language"=>$lang,"tone"=>$tone));
+
             if(isset($curl->response->content)){
                 $content = $curl->response->headings ? $this->process_content($curl->response) : $curl->response->content;
                 $title = $curl->response->title;

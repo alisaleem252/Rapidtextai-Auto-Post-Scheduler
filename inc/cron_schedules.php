@@ -62,7 +62,7 @@ use Curl\Curl;
             else
             $curl->post(gigsix_chatgpt_scheduler_network.'detailedarticle?gigsixkey='.$ChatGPTScheduler_settings_CBF['key'],array("topic"=>$Primary_Keyword,"temperature"=>$Temperature));
             if (isset($curl->response->content)){
-                $content = $curl->response->headings ? $this->process_content($curl->response) : $curl->response->content;
+                $content = $curl->response->headings ? $helper->process_content($curl->response) : $curl->response->content;
                 $title = $curl->response->title;
                 $new_post_id = $helper->duplicate_post($Template_Post,$title,$content,$post_status);
             }
