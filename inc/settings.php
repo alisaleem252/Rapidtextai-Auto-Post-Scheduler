@@ -1,4 +1,5 @@
 <?php
+use Curl\Curl;
 class ChatGPTScheduler_Settings_Page {
 
 	public function __construct() {
@@ -93,6 +94,8 @@ class ChatGPTScheduler_Settings_Page {
 
 
     function ChatGPTScheduler_settings_CBF(){
+      
+       // print_r($curl);
         $message='';
         if(isset($_POST['noncetoken_name_chatGPT_schedule_settings']) && wp_verify_nonce($_POST['noncetoken_name_chatGPT_schedule_settings'],'noncetoken_chatGPT_schedule_settings')){
             update_option('ChatGPTScheduler_settings_CBF',$_POST['ChatGPTScheduler_settings_CBF']);
@@ -100,14 +103,62 @@ class ChatGPTScheduler_Settings_Page {
         }
         $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array('key'=>'trial'));
       
-      
+        $curl = new Curl();
+        $curl->disableTimeout();
+        $curl->get('https://gigsix.com/clients/api.php?gigsixkey='.(isset($ChatGPTScheduler_settings_CBF['key']) ? $ChatGPTScheduler_settings_CBF['key'] : ''));
         ?>
     <h1><?php _e('Settings','gigsix_chatgpt_scheduler') ?></h1>
     <form name="ChatGPTScheduler_settings_CBF" method="POST">
         <table class="form-table" role="presentation">
             <tr>
                 <th><?php _e('Gigsix Connect Key','gigsix_chatgpt_scheduler') ?></th>
-                <td><input name="ChatGPTScheduler_settings_CBF[key]" type="text" value="<?php echo (isset($ChatGPTScheduler_settings_CBF['key']) ? $ChatGPTScheduler_settings_CBF['key'] : 'trial')?>" class="regular-text" /> <a target="_blank" href="https://gigsix.com/clients"><?php _e('Get Gigsix Connect Key','gigsix_chatgpt_scheduler') ?></a></td>                
+                <td><input name="ChatGPTScheduler_settings_CBF[key]" type="text" value="<?php echo (isset($ChatGPTScheduler_settings_CBF['key']) ? $ChatGPTScheduler_settings_CBF['key'] : '')?>" class="regular-text" /> <a target="_blank" href="https://gigsix.com/clients"><?php _e('Get Gigsix Connect Key','gigsix_chatgpt_scheduler') ?></a></td>                
+            </tr>
+            <tr>
+                <th><?php _e('Status of Gigsix Connect Key/ Subscription','gigsix_chatgpt_scheduler') ?></th>
+                <td>
+    <?php if (isset($curl->response)){ 
+            $response_data = json_decode($curl->response);
+            if(isset($response_data->response_code)){
+                if($response_data->response_code == 1 || $response_data->response_code == 2){
+                    $code = $response_data->response_code;?>
+                    <table class="form-table">
+                        <tr>
+                            <th><?php _e('Created','gigsix_chatgpt_scheduler') ?></th>
+                            <td><?php echo ($code == 1 ? $response_data->create_at : 'N/A')?></td>
+                        </tr>
+                        <tr>
+                            <th><?php _e('Status','gigsix_chatgpt_scheduler') ?></th>
+                            <td><?php echo ($code == 1 ? $response_data->subscription_status : 'Trial')?></td>
+                        </tr>
+                        <tr>
+                            <th><?php _e('Interval','gigsix_chatgpt_scheduler') ?></th>
+                            <td><?php echo ($code == 1 ? $response_data->subscription_interval : 'N/A')?></td>
+                        </tr>
+                        <tr>
+                            <th><?php _e('Start','gigsix_chatgpt_scheduler') ?></th>
+                            <td><?php echo ($code == 1 ? $response_data->current_period_start : 'N/A')?></td>
+                        </tr>
+                        <tr>
+                            <th><?php _e('End','gigsix_chatgpt_scheduler') ?></th>
+                            <td><?php echo ($code == 1 ? $response_data->current_period_end : 'N/A')?></td>
+                        </tr>
+                        <tr>
+                            <th><?php _e('Requests','gigsix_chatgpt_scheduler') ?></th>
+                            <td><?php echo ($code == 1 ? $response_data->requests.'/ 1000' : $response_data->requests.'/ 100')?></td>
+                        </tr>
+                    </table>
+    <?php 
+                }
+                else
+                    echo $response_data->message;
+            }
+        } //if (isset($curl->response->response_code)){ 
+        else
+            $curl->errorMessage
+            ?>  
+
+                </td>                
             </tr>
             <tr>
                 <th>About the AI Model</th>
