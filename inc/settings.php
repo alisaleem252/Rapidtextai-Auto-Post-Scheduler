@@ -145,7 +145,7 @@ class ChatGPTScheduler_Settings_Page {
                         </tr>
                         <tr>
                             <th><?php _e('Requests','gigsix_chatgpt_scheduler') ?></th>
-                            <td><?php echo ($code == 1 ? $response_data->requests.'/ 1000' : $response_data->requests.'/ 100')?></td>
+                            <td><?php echo ($code == 1 ? $response_data->requests.'/ ∞' : $response_data->requests.'/ 100')?></td>
                         </tr>
                     </table>
     <?php 
