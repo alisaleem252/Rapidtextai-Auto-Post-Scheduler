@@ -105,8 +105,7 @@ class ChatGPTScheduler_Settings_Page {
       
         $curl = new Curl();
         $curl->disableTimeout();
-        $curl->get('http://localhost/clents_data/clients/api.php?gigsixkey='.(isset($ChatGPTScheduler_settings_CBF['key']) ? $ChatGPTScheduler_settings_CBF['key'] : ''));
-        //echo '<pre>';print_r($curl->response);echo '</pre>';
+        $curl->get('https://gigsix.com/clients/api.php?gigsixkey='.(isset($ChatGPTScheduler_settings_CBF['key']) ? $ChatGPTScheduler_settings_CBF['key'] : ''));
         ?>
     <h1><?php _e('Settings','gigsix_chatgpt_scheduler') ?></h1>
     <form name="ChatGPTScheduler_settings_CBF" method="POST">
