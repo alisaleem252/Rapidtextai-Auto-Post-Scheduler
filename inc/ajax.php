@@ -4,16 +4,16 @@ class ChatGPT_scheduler_ajax{
       add_action('wp_ajax_chatGPT_schedule_get_taxonomy', array($this,'get_taxonomy_callback'));
       add_action('wp_ajax_nopriv_chatGPT_schedule_get_taxonomy', array($this,'get_taxonomy_callback'));
       add_action('wp_ajax_chatGPT_schedule_get_taxonomy_terms', array($this,'get_taxonomy_terms_callback'));
-      add_action('wp_ajax_chatGPT_Gigsix_content', array($this,'Gigsix_content_ajax'));
-      add_action('wp_ajax_nopriv_chatGPT_Gigsix_content', array($this,'Gigsix_content_ajax'));
+      add_action('wp_ajax_chatGPT_Rapidtextai_content', array($this,'Rapidtextai_content_ajax'));
+      add_action('wp_ajax_nopriv_chatGPT_Rapidtextai_content', array($this,'Rapidtextai_content_ajax'));
     }
-    function Gigsix_content_ajax(){
-      $n = new gigsix_chatgpt_scheduler_Helper;
+    function Rapidtextai_content_ajax(){
+      $n = new rapidtextai_chatgpt_scheduler_Helper;
       $topic = $_REQUEST['topic'];
       $temp = $_REQUEST['temp'];
       $tone = $_REQUEST['tone'];
       $lang = $_REQUEST['lang'];
-      echo json_encode($n->gigsix_content($topic,$temp,$lang,$tone));
+      echo json_encode($n->rapidtextai_content($topic,$temp,$lang,$tone));
       die();
 
     }

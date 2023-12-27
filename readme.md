@@ -1,6 +1,6 @@
 # Rapidtextai Auto Post Scheduler
 
-Contributors: alisaleem252, Gigsix  
+Contributors: alisaleem252, Rapidtextai  
 Tags: chatgpt, schedule, auto posting, chatgpt3  
 Requires at least: 4.2  
 Tested up to: 6.1  

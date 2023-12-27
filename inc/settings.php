@@ -8,9 +8,12 @@ class ChatGPTScheduler_Settings_Page {
 	}
 
     public function enqueue_custom_styles() {
-        wp_enqueue_script( 'adminchatgpt', gigsix_chatgpt_scheduler_URL.'/js/admin.js?v=4.11', array('jquery'));
-        wp_enqueue_script( 'adminchatgptTyped', gigsix_chatgpt_scheduler_URL.'/js/typed.min.js', array('jquery'));
-        wp_enqueue_style( 'adminchatgpt_css',gigsix_chatgpt_scheduler_URL.'/css/admin.css');
+        $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array('key'=>'trial'));
+        wp_enqueue_script( 'adminchatgpt', rapidtextai_chatgpt_scheduler_URL.'/js/admin.js?v=4.11', array('jquery'));
+        wp_localize_script('adminchatgpt', 'rapidtextaiURL', rapidtextai_chatgpt_scheduler_network);
+        wp_localize_script('adminchatgpt', 'gigsixkey', $ChatGPTScheduler_settings_CBF['key']);
+        wp_enqueue_script( 'adminchatgptTyped', rapidtextai_chatgpt_scheduler_URL.'/js/typed.min.js', array('jquery'));
+        wp_enqueue_style( 'adminchatgpt_css',rapidtextai_chatgpt_scheduler_URL.'/css/admin.css');
     }              
 
 	public function wph_create_settings() {
@@ -26,8 +29,8 @@ class ChatGPTScheduler_Settings_Page {
 	}
     
 	public function wph_settings_content() { 
-        $message;
-        $helper = new gigsix_chatgpt_scheduler_Helper;
+        $message = '';
+        $helper = new rapidtextai_chatgpt_scheduler_Helper;
         $scheduler = new ChatGPT_Cron_Schedules;
         if(isset($_POST['noncetoken_name_chatGPT_schedule_settings']) && wp_verify_nonce($_POST['noncetoken_name_chatGPT_schedule_settings'],'noncetoken_chatGPT_schedule_settings') && isset($_POST['chatGPT_schedule_settings_submitBtn']) ){
             update_option('chatGPT_schedule_settings',$_POST['chatGPT_schedule_settings']);
@@ -54,22 +57,22 @@ class ChatGPTScheduler_Settings_Page {
    
         ?>
 		<div class="wrap">
-			<h1><?php _e('ChatGPT Scheduler','gigsix_chatgpt_scheduler') ?></h1>
+			<h1><?php _e('ChatGPT Scheduler','rapidtextai_chatgpt_scheduler') ?></h1>
             <?php echo $message?>
             <form name="chatGPT_schedule_settings" id="chatGPT_schedule_settings" method="POST">
                 <table id="wrapper_content" class="wp-list-table widefat striped ChatGPT_scheduler_Table">
                     <tr>
-                        <th><?php _e('Prompt Type','gigsix_chatgpt_scheduler') ?></th>
-                        <th><?php _e('Topic','gigsix_chatgpt_scheduler') ?></th>
-                        <th><?php _e('Temperature','gigsix_chatgpt_scheduler') ?></th>
-                        <th><?php _e('Template Posts','gigsix_chatgpt_scheduler') ?></td>
-                        <th><?php _e('Schedule Time ','gigsix_chatgpt_scheduler'); echo date('d/m/y h:i A') ?></th>
-                        <th><?php _e('Schedule Pattern','gigsix_chatgpt_scheduler') ?></th>
-                        <th><?php _e('Post Status','gigsix_chatgpt_scheduler') ?></th>
-                        <th><?php _e('Add/ Remove','gigsix_chatgpt_scheduler') ?></th>
+                        <th><?php _e('Prompt Type','rapidtextai_chatgpt_scheduler') ?></th>
+                        <th><?php _e('Topic','rapidtextai_chatgpt_scheduler') ?></th>
+                        <th><?php _e('Temperature','rapidtextai_chatgpt_scheduler') ?></th>
+                        <th><?php _e('Template Posts','rapidtextai_chatgpt_scheduler') ?></td>
+                        <th><?php _e('Schedule Time ','rapidtextai_chatgpt_scheduler'); echo date('d/m/y h:i A') ?></th>
+                        <th><?php _e('Schedule Pattern','rapidtextai_chatgpt_scheduler') ?></th>
+                        <th><?php _e('Post Status','rapidtextai_chatgpt_scheduler') ?></th>
+                        <th><?php _e('Add/ Remove','rapidtextai_chatgpt_scheduler') ?></th>
                     </tr>
                     <tr id="copy_content">
-                        <td><?php _e('ChatGPT','gigsix_chatgpt_scheduler') ?></td>
+                        <td><?php _e('ChatGPT','rapidtextai_chatgpt_scheduler') ?></td>
                         <td><input type="text" name="chatGPT_schedule_settings[Primary_Keyword][]" class="Primary_Keyword" value="<?php echo $Primary_Keyword_0?>" /></td>
                         <td><input class="range-slider__range" name="chatGPT_schedule_settings[Temperature][]" type="range" value="<?php echo $Temperature_0?>" min="0" max="1" step="0.1" /><span class="range-slider__value"><?php echo $Temperature_0?></span></td>
                         <td><?php echo $helper->get_template_posts_dropdown($Template_Post_0)?></td>
@@ -85,7 +88,7 @@ class ChatGPTScheduler_Settings_Page {
                 </table>
                 
                 <p>
-                    <input type="submit" name="chatGPT_schedule_settings_submitBtn" value="<?php _e('Save Settings','gigsix_chatgpt_scheduler') ?>" class="button button-primary" />
+                    <input type="submit" name="chatGPT_schedule_settings_submitBtn" value="<?php _e('Save Settings','rapidtextai_chatgpt_scheduler') ?>" class="button button-primary" />
                 </p>
                 <?php wp_nonce_field( 'noncetoken_chatGPT_schedule_settings', 'noncetoken_name_chatGPT_schedule_settings' );?>
         </form>
@@ -105,46 +108,48 @@ class ChatGPTScheduler_Settings_Page {
       
         $curl = new Curl();
         $curl->disableTimeout();
-        $curl->get('https://gigsix.com/clients/api.php?gigsixkey='.(isset($ChatGPTScheduler_settings_CBF['key']) ? $ChatGPTScheduler_settings_CBF['key'] : ''));
+        $curl->setOpt(CURLOPT_SSL_VERIFYPEER, false);
+        $curl->get('https://app.rapidtextai.com/api.php?gigsixkey='.(isset($ChatGPTScheduler_settings_CBF['key']) ? $ChatGPTScheduler_settings_CBF['key'] : ''));
         ?>
-    <h1><?php _e('Settings','gigsix_chatgpt_scheduler') ?></h1>
+    <h1><?php _e('Settings','rapidtextai_chatgpt_scheduler') ?></h1>
     <form name="ChatGPTScheduler_settings_CBF" method="POST">
         <table class="form-table" role="presentation">
             <tr>
-                <th><?php _e('Gigsix Connect Key','gigsix_chatgpt_scheduler') ?></th>
-                <td><input name="ChatGPTScheduler_settings_CBF[key]" type="text" value="<?php echo (isset($ChatGPTScheduler_settings_CBF['key']) ? $ChatGPTScheduler_settings_CBF['key'] : '')?>" class="regular-text" /> <a target="_blank" href="https://gigsix.com/clients"><?php _e('Get Gigsix Connect Key','gigsix_chatgpt_scheduler') ?></a></td>                
+                <th><?php _e('rapidtextai Connect Key','rapidtextai_chatgpt_scheduler') ?></th>
+                <td><input name="ChatGPTScheduler_settings_CBF[key]" type="text" value="<?php echo (isset($ChatGPTScheduler_settings_CBF['key']) ? $ChatGPTScheduler_settings_CBF['key'] : '')?>" class="regular-text" /> <a target="_blank" href="https://app.rapidtextai.com"><?php _e('Get Rapidtextai Connect Key','rapidtextai_chatgpt_scheduler') ?></a></td>                
             </tr>
             <tr>
-                <th><?php _e('Status of Gigsix Connect Key/ Subscription','gigsix_chatgpt_scheduler') ?></th>
+                <th><?php _e('Status of rapidtextai Connect Key Subscription','rapidtextai_chatgpt_scheduler') ?></th>
                 <td>
     <?php if (isset($curl->response)){ 
             $response_data = json_decode($curl->response);
+            
             if(isset($response_data->response_code)){
-                if($response_data->response_code == 1 || $response_data->response_code == 2){
+                if($response_data->response_code == 1 || $response_data->response_code == 2 || $response_data->response_code == 4){
                     $code = $response_data->response_code;?>
                     <table class="form-table">
                         <tr>
-                            <th><?php _e('Created','gigsix_chatgpt_scheduler') ?></th>
+                            <th><?php _e('Created','rapidtextai_chatgpt_scheduler') ?></th>
                             <td><?php echo ($code == 1 ? $response_data->create_at : 'N/A')?></td>
                         </tr>
                         <tr>
-                            <th><?php _e('Status','gigsix_chatgpt_scheduler') ?></th>
-                            <td><?php echo ($code == 1 ? $response_data->subscription_status : 'Trial')?></td>
+                            <th><?php _e('Status','rapidtextai_chatgpt_scheduler') ?></th>
+                            <td><?php echo ($code == 4 ? $response_data->subscription_status : 'Trial')?></td>
                         </tr>
                         <tr>
-                            <th><?php _e('Interval','gigsix_chatgpt_scheduler') ?></th>
+                            <th><?php _e('Interval','rapidtextai_chatgpt_scheduler') ?></th>
                             <td><?php echo ($code == 1 ? $response_data->subscription_interval : 'N/A')?></td>
                         </tr>
                         <tr>
-                            <th><?php _e('Start','gigsix_chatgpt_scheduler') ?></th>
+                            <th><?php _e('Start','rapidtextai_chatgpt_scheduler') ?></th>
                             <td><?php echo ($code == 1 ? $response_data->current_period_start : 'N/A')?></td>
                         </tr>
                         <tr>
-                            <th><?php _e('End','gigsix_chatgpt_scheduler') ?></th>
+                            <th><?php _e('End','rapidtextai_chatgpt_scheduler') ?></th>
                             <td><?php echo ($code == 1 ? $response_data->current_period_end : 'N/A')?></td>
                         </tr>
                         <tr>
-                            <th><?php _e('Requests','gigsix_chatgpt_scheduler') ?></th>
+                            <th><?php _e('Requests','rapidtextai_chatgpt_scheduler') ?></th>
                             <td><?php echo ($code == 1 ? $response_data->requests.'/ ∞' : $response_data->requests.'/ 100')?></td>
                         </tr>
                     </table>

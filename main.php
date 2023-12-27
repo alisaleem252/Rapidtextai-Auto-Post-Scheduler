@@ -10,18 +10,18 @@
  *
  * @link              https://app.rapidtextai.com/
  * @since             1.0.0
- * @package           Gigsix_gigsix_chatgpt_scheduler
+ * @package           Rapidtextai_rapidtextai_chatgpt_scheduler
  *
  * @wordpress-plugin
  * Plugin Name:       RapidtextAI Auto Post Scheduler
  * Plugin URI:        https://app.rapidtextai.com
  * Description:       Generate AI Content for your WordPress Posts.
  * Version:           1.5.1
- * Author:            Alisaleem252 || Gigsix
+ * Author:            Alisaleem252 || Rapidtextai
  * Author URI:        https://alisaleem252.com/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       gigsix_chatgpt_scheduler
+ * Text Domain:       rapidtextai_chatgpt_scheduler
  * Domain Path:       /languages
  */
 
@@ -32,23 +32,23 @@ if ( ! defined( 'WPINC' ) ) {
 
 
 
-define( 'gigsix_PLUGIN_VERSION', '1.5.1' );
-define('gigsix_chatgpt_scheduler_URL', plugin_dir_url(__FILE__));
-define('gigsix_chatgpt_scheduler_PATH', dirname(__FILE__));
-define('gigsix_chatgpt_scheduler_network', 'https://app.rapidtextai.com/openai/');
+define( 'rapidtextai_PLUGIN_VERSION', '1.5.1' );
+define('rapidtextai_chatgpt_scheduler_URL', plugin_dir_url(__FILE__));
+define('rapidtextai_chatgpt_scheduler_PATH', dirname(__FILE__));
+define('rapidtextai_chatgpt_scheduler_network', 'https://app.rapidtextai.com/openai/');
 
-require_once(gigsix_chatgpt_scheduler_PATH.'/inc/helper.php');
-require_once(gigsix_chatgpt_scheduler_PATH.'/inc/settings.php');
-require_once(gigsix_chatgpt_scheduler_PATH.'/inc/ajax.php');
-require_once(gigsix_chatgpt_scheduler_PATH.'/inc/metabox.php');
-require_once(gigsix_chatgpt_scheduler_PATH.'/inc/cron_schedules.php');
+require_once(rapidtextai_chatgpt_scheduler_PATH.'/inc/helper.php');
+require_once(rapidtextai_chatgpt_scheduler_PATH.'/inc/settings.php');
+require_once(rapidtextai_chatgpt_scheduler_PATH.'/inc/ajax.php');
+require_once(rapidtextai_chatgpt_scheduler_PATH.'/inc/metabox.php');
+require_once(rapidtextai_chatgpt_scheduler_PATH.'/inc/cron_schedules.php');
 
 
-require_once(gigsix_chatgpt_scheduler_PATH.'/wp_autoupdate.php');
+require_once(rapidtextai_chatgpt_scheduler_PATH.'/wp_autoupdate.php');
 
 add_action('init', 'chatgpt_update_plugin_version');
 function chatgpt_update_plugin_version(){
-	$plugin_current_version = gigsix_PLUGIN_VERSION;
+	$plugin_current_version = rapidtextai_PLUGIN_VERSION;
 	$plugin_remote_path     = 'https://app.rapidtextai.com/plugin/update.php';
 	$plugin_slug            = plugin_basename(__FILE__);
 	$test = new WP_AutoUpdate ($plugin_current_version, $plugin_remote_path, $plugin_slug);

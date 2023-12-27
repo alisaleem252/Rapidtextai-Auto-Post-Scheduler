@@ -1,21 +1,22 @@
 <?php
-require gigsix_chatgpt_scheduler_PATH.'/lib/vendor/autoload.php';
+require rapidtextai_chatgpt_scheduler_PATH.'/lib/vendor/autoload.php';
 use Curl\Curl;
 
-class gigsix_chatgpt_scheduler_Helper {
-    public function gigsix_content($topic,$temprature,$lang,$tone){
+class rapidtextai_chatgpt_scheduler_Helper {
+    public function rapidtextai_content($topic,$temprature,$lang,$tone){
         $curl = new Curl();
         $curl->disableTimeout();
+        $curl->setOpt(CURLOPT_SSL_VERIFYPEER, false);
             $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array('key'=>'trial'));
             if($ChatGPTScheduler_settings_CBF['key'] == 'trial')
-            $curl->post(gigsix_chatgpt_scheduler_network.'trial/?gigsixkey=trial',array("topic"=>$topic,"temperature"=>$temprature,"language"=>$lang,"tone"=>$tone));
+            $curl->post(rapidtextai_chatgpt_scheduler_network.'trial/?gigsixkey=trial',array("topic"=>$topic,"temperature"=>$temprature,"language"=>$lang,"tone"=>$tone));
             else
-            $curl->post(gigsix_chatgpt_scheduler_network.'detailedarticle/?gigsixkey='.$ChatGPTScheduler_settings_CBF['key'],array("topic"=>$topic,"temperature"=>$temprature,"language"=>$lang,"tone"=>$tone));
+            $curl->post(rapidtextai_chatgpt_scheduler_network.'article/?gigsixkey='.$ChatGPTScheduler_settings_CBF['key'],array("topic"=>$topic,"temperature"=>$temprature,"language"=>$lang,"tone"=>$tone));
 
             if(isset($curl->response->content)){
                 $content = $curl->response->headings ? $this->process_content($curl->response) : $curl->response->content;
-                $title = $curl->response->title;
-                $result = array('title'=>$title,'content'=>$content);
+                //$title = $curl->response->title;
+                $result = wpautop($content);
             }
             else {
                 $result = array('error',$curl->errorMessage);
@@ -36,6 +37,10 @@ class gigsix_chatgpt_scheduler_Helper {
         $result = $context.$intro.$main_content;
         return $result;
 
+    }
+    public function process_content_scheduler($content){
+        $content = json_decode($content);
+        return ['title'=>$content->title,'content'=>$content->content];
     }
     public function get_post_types_dropdown($selected='') {
         $post_types = get_post_types(array('public' => true), 'objects');

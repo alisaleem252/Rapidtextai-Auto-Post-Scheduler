@@ -71,10 +71,11 @@ jQuery(document).ready(function($) {
         return;
       }
       $.ajax({
-          url:ajaxurl,
+          type:'post',
+          url:rapidtextaiURL+'article/?gigsixkey='+gigsixkey,
           dataType:'json',
           data:{
-            "action": "chatGPT_Gigsix_content", 
+            
             "topic": topic,"lang":lang,"temp":temp,"tone":tone
           },
           beforeSend:function(){ jQuery('#chgtpt_disp889789').hide();jQuery('#chgptpo_loading89789').show();},
@@ -88,29 +89,43 @@ jQuery(document).ready(function($) {
                   jQuery('#chgptpo_loading89789').hide();
               }
               else {
-                if (typeof wp !== 'undefined' && typeof wp.data !== 'undefined' && typeof wp.blocks !== 'undefined' && response.content.length) {
+                let content = response.content;
+                // Replace \n\n# with <h2>
+                content = content.replace(/\n\n#/g, "<h2>");
+
+                // Replace next \n\n with closing </h2>
+                content = content.replace(/\n\n/g, "</h2>");
+
+                // Replace remaining \n with <p> and </p>
+                content = content.replace(/\n/g, "</p><p>");
+
+                // Add opening <p> at the start and closing </p> at the end
+                content = "<p>" + content + "</p>";
+
+                if (typeof wp !== 'undefined' && typeof wp.data !== 'undefined' && typeof wp.blocks !== 'undefined' && content.length) {
                   const { dispatch } = wp.data;
                   // Insert a new paragraph block with custom text
-                  const newText = response.content;
+                  const newText = content;
                   const newBlock = wp.blocks.createBlock('core/paragraph', {
                     content: newText,
                   });
-                  dispatch('core/editor').editPost({ title: response.title });
+                  //dispatch('core/editor').editPost({ title: response.title });
                   // Add the new block to the editor
                   dispatch('core/editor').insertBlock(newBlock);
                 }
                 else {
                       jQuery('#content-html').click();
-                       jQuery('#title').val(response.title);
+                       //jQuery('#title').val(response.title);
                        jQuery('#title-prompt-text').text('');
-                       jQuery('.wp-editor-area').val(response.content);
+                      var currentContent = jQuery('.wp-editor-area').val();
+                      jQuery('.wp-editor-area').val(currentContent + content);
                 }
                 
                 //Cgpt_typeWriter('.editor-post-title',response.title);
                 //jQuery('.block-editor-default-block-appender__content').html(response.content);
                 // Insert text into the block's content
                 // Get the current block editor instance
-                jQuery('#chgptpo_generated89789').html(response.content.length+' Characters Generated');
+                jQuery('#chgptpo_generated89789').html(content.length+' Characters Generated');
             }
           },
           error:function(){ jQuery('#chgtpt_disp889789').show();jQuery('#chgptpo_loading89789').hide();}
