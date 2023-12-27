@@ -14,7 +14,7 @@
  *
  * @wordpress-plugin
  * Plugin Name:       RapidtextAI Auto Post Scheduler
- * Plugin URI:        https://gigsix.com/clients
+ * Plugin URI:        https://app.rapidtextai.com
  * Description:       Generate AI Content for your WordPress Posts.
  * Version:           1.5.1
  * Author:            Alisaleem252 || Gigsix
