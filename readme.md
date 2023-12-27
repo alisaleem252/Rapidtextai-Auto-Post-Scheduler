@@ -1,4 +1,4 @@
-# Gigsix ChatGPT Auto Post Scheduler
+# Rapidtextai Auto Post Scheduler
 
 Contributors: alisaleem252, Gigsix  
 Tags: chatgpt, schedule, auto posting, chatgpt3  
@@ -8,13 +8,13 @@ Stable tag: 1.15.1
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Donate link: https://gigsix.com/clients
+Donate link: https://app.rapidtextai.com
 
-Gigsix ChatGPT Post Scheduler Lets to schedule your posting using ChatGPT3.
+Rapidtextai Post Scheduler Lets to schedule your posting using ChatGPT3.
 
 ## Description
 
-Gigsix ChatGPT Auto Post Scheduler is a WordPress plugin that allows users to schedule automatic posts using the power of OpenAI's ChatGPT language model. With this plugin, you can easily create and schedule blog posts without having to manually write each one.:
+Rapidtextai Auto Post Scheduler is a WordPress plugin that allows users to schedule automatic posts using the power of OpenAI's ChatGPT language model. With this plugin, you can easily create and schedule blog posts without having to manually write each one.:
 
 * Schedule posts for future publication.
 * Automatically generate content for your posts using ChatGPT's language model.
@@ -28,13 +28,13 @@ Gigsix ChatGPT Auto Post Scheduler is a WordPress plugin that allows users to sc
 *  Download the plugin zip file from the WordPress Plugin Directory.
 *  Upload the plugin to your WordPress site using the Plugins > Add New page.
 *  Activate the plugin through the Plugins menu in WordPress.
-*  Navigate to the plugin settings page and enter your Gigsix Connect Key from https://gigsix.com/clients .
+*  Navigate to the plugin settings page and enter your Rapidtextai Connect Key from [rapidtextai.com](https://app.rapidtextai.com/) .
 *  Start creating and scheduling your posts!
 
 
 ## Usage
 * Navigate to the ChatGPT Auto Post Scheduler settings page.
-* Enter your Gigsix Connect key and save the settings.
+* Enter your Rapidtextai Connect key and save the settings.
 * Create a new post in WordPress Choose topic and click on the "Generate" button.
 * Wait for the post content to load.
 * Review and edit the generated content as needed.
@@ -48,7 +48,7 @@ Gigsix ChatGPT Auto Post Scheduler is a WordPress plugin that allows users to sc
 * From the bulk scheduler, select that template, write the topic, select temprature and timings.
 
 ## Support
-If you need help with the Gigsix ChatGPT Auto Post Scheduler plugin, please visit the WordPress Plugin Directory page for the plugin or contact us at info at gigsix.com.
+If you need help with the RapidtextAI Auto Post Scheduler plugin, please visit the WordPress Plugin Directory page for the plugin or contact us at info at rapidtextai.com.
 
 ## License
 The ChatGPT Auto Post Scheduler plugin is licensed under the GPL version 2 or later.
