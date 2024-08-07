@@ -49,7 +49,7 @@ require_once(rapidtextai_chatgpt_scheduler_PATH.'/wp_autoupdate.php');
 add_action('init', 'chatgpt_update_plugin_version');
 function chatgpt_update_plugin_version(){
 	$plugin_current_version = rapidtextai_PLUGIN_VERSION;
-	$plugin_remote_path     = 'https://app.rapidtextai.com/plugin/update.php';
+	$plugin_remote_path     = 'https://rapidtextai.com/plugin/update.php';
 	$plugin_slug            = plugin_basename(__FILE__);
 	$test = new WP_AutoUpdate ($plugin_current_version, $plugin_remote_path, $plugin_slug);
 }
