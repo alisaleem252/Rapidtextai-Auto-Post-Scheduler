@@ -46,6 +46,7 @@ use Curl\Curl;
       }
       public function cgpt_cron_schedule_eventCBF($pattern, $key){
         $helper = new rapidtextai_chatgpt_scheduler_Helper;
+        $helper->log('Hook running');
         $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array('key'=>'trial'));
           $chatGPT_schedule_settings =  get_option('chatGPT_schedule_settings',array());
           $Primary_Keyword=$chatGPT_schedule_settings['Primary_Keyword'][$key];
@@ -56,52 +57,34 @@ use Curl\Curl;
           $Temperature=$chatGPT_schedule_settings['Temperature'][$key];
           
           if(isset($ChatGPTScheduler_settings_CBF['key']) && trim($ChatGPTScheduler_settings_CBF['key']) !=''){
+            $helper->log('Key Set');
             $curl = new Curl();
             $curl->disableTimeout();
+            //$curl->setOpt(CURLOPT_TIMEOUT, 60); // Set a timeout of 30 seconds
             $curl->setOpt(CURLOPT_SSL_VERIFYPEER, false);
-            if($ChatGPTScheduler_settings_CBF['key'] == 'trial')
-            $curl->post(rapidtextai_chatgpt_scheduler_network.'trial?gigsixkey=trial',array("topic"=>$Primary_Keyword,"temperature"=>$Temperature));
-            else
-            $curl->post(rapidtextai_chatgpt_scheduler_network.'articlescheduler?gigsixkey='.$ChatGPTScheduler_settings_CBF['key'],array("topic"=>$Primary_Keyword,"temperature"=>$Temperature));
-            if (isset($curl->response->content)){
-                $content = $curl->response->content ? $helper->process_content_scheduler($curl->response->content) : $curl->response->content;
+            if($ChatGPTScheduler_settings_CBF['key'] == 'trial'){
+              $helper->log('Trial');
+              $curl->post(rapidtextai_chatgpt_scheduler_network.'trial?gigsixkey=trial',array("topic"=>$Primary_Keyword,"temperature"=>$Temperature));
+            }
+            else {
+              $helper->log('Article');
+              $curl->post(rapidtextai_chatgpt_scheduler_network.'detailedarticle-v2?gigsixkey='.$ChatGPTScheduler_settings_CBF['key'],array("topic"=>$Primary_Keyword,"temperature"=>$Temperature));
+            }
+            // Start output buffering
+            $helper->log($curl->response);
+            if (isset($curl->response)){
+                $content = $curl->response ? $helper->process_content_scheduler($curl->response) : $curl->response;
+                
                 $title = $content['title'];
+                $helper->log(print_r($content,true));
+                if($content['content'] == '' || $content['title'] == ''){
+                  $helper->log('No Content');
+                  return;
+                }
                 $new_post_id = $helper->duplicate_post($Template_Post,$title,$content['content'],$post_status);
                 update_metadata('post',$new_post_id,'chatgpt_used_as_cgpt_templater','no');
             }
-            $helper->log(print_r($curl,true));
-          }
-
-      }
-      function cgpt_cron_schedule_eventCBFinit(){
-        $pattern = 'cgpt_everyday';
-        $key = 0;
-        $helper = new rapidtextai_chatgpt_scheduler_Helper;
-        $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array('key'=>'trial'));
-          $chatGPT_schedule_settings =  get_option('chatGPT_schedule_settings',array());
-          $Primary_Keyword=$chatGPT_schedule_settings['Primary_Keyword'][$key];
-          $Template_Post=$chatGPT_schedule_settings['Template_Post'][$key];
-          $time=$chatGPT_schedule_settings['time'][$key];
-          $Pattern=$chatGPT_schedule_settings['Pattern'][$key];
-          $post_status=$chatGPT_schedule_settings['post_status'][$key];
-          $Temperature=$chatGPT_schedule_settings['Temperature'][$key];
-          
-          if(isset($ChatGPTScheduler_settings_CBF['key']) && trim($ChatGPTScheduler_settings_CBF['key']) !=''){
-            $curl = new Curl();
-            $curl->disableTimeout();
-            $curl->setOpt(CURLOPT_SSL_VERIFYPEER, false);
-            if($ChatGPTScheduler_settings_CBF['key'] == 'trial')
-            $curl->post(rapidtextai_chatgpt_scheduler_network.'trial?gigsixkey=trial',array("topic"=>$Primary_Keyword,"temperature"=>$Temperature));
-            else
-            $curl->post(rapidtextai_chatgpt_scheduler_network.'articlescheduler?gigsixkey='.$ChatGPTScheduler_settings_CBF['key'],array("topic"=>$Primary_Keyword,"temperature"=>$Temperature));
-          var_dump($curl->response);exit;
-            if (isset($curl->response->content)){
-                $content = $curl->response->content ? $helper->process_content_scheduler($curl->response->content) : $curl->response->content;
-                $title = $content['title'];
-                $new_post_id = $helper->duplicate_post($Template_Post,$title,$content['content'],$post_status);
-                update_metadata('post',$new_post_id,'chatgpt_used_as_cgpt_templater','no');
-            }
-            $helper->log(print_r($curl,true));
+            
           }
 
       }

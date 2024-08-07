@@ -72,8 +72,8 @@ jQuery(document).ready(function($) {
       }
       $.ajax({
           type:'post',
-          url:rapidtextaiURL+'article/?gigsixkey='+gigsixkey,
-          dataType:'json',
+          url:rapidtextaiURL+'detailedarticle-v2/?gigsixkey='+gigsixkey,
+          dataType:'text',
           data:{
             
             "topic": topic,"lang":lang,"temp":temp,"tone":tone
@@ -81,6 +81,7 @@ jQuery(document).ready(function($) {
           beforeSend:function(){ jQuery('#chgtpt_disp889789').hide();jQuery('#chgptpo_loading89789').show();},
           complete:function(response){ 
                               jQuery('#chgptpo_loading89789').hide();
+                              console.log(response);
                             },
           success:function(response){  
             console.log(response);
@@ -89,36 +90,91 @@ jQuery(document).ready(function($) {
                   jQuery('#chgptpo_loading89789').hide();
               }
               else {
-                let content = response.content;
+                let content = response;
+
+                
+
+                content = content.replace('```json', "");
                 // Replace \n\n# with <h2>
-                content = content.replace(/\n\n#/g, "<h2>");
+
+                content = content.replace('```', "");
+                console.log(content);
+                // parse content as json
+                content = JSON.parse(content);
+
+                
+                //content = content.replace(/\n\n#/g, "<h2>");
 
                 // Replace next \n\n with closing </h2>
-                content = content.replace(/\n\n/g, "</h2>");
+                //content = content.replace(/\n\n/g, "</h2>");
 
                 // Replace remaining \n with <p> and </p>
-                content = content.replace(/\n/g, "</p><p>");
+                //content = content.replace(/\n/g, "</p><p>");
 
                 // Add opening <p> at the start and closing </p> at the end
-                content = "<p>" + content + "</p>";
+                //content = "<p>" + content + "</p>";
 
                 if (typeof wp !== 'undefined' && typeof wp.data !== 'undefined' && typeof wp.blocks !== 'undefined' && content.length) {
                   const { dispatch } = wp.data;
                   // Insert a new paragraph block with custom text
-                  const newText = content;
-                  const newBlock = wp.blocks.createBlock('core/paragraph', {
-                    content: newText,
-                  });
-                  //dispatch('core/editor').editPost({ title: response.title });
-                  // Add the new block to the editor
-                  dispatch('core/editor').insertBlock(newBlock);
+                  // Access the first element of the content array
+                  const item = content[0];
+                  if (item.msg === 'successfully generated') {
+                    // Create and insert title block
+                    if (item.title) {
+                      const titleBlock = wp.blocks.createBlock('core/heading', {
+                        content: item.title,
+                        level: 1, // H1 heading
+                      });
+                      dispatch('core/block-editor').insertBlock(titleBlock);
+                    }
+
+                    // Create and insert intro block
+                    if (item.intro) {
+                      const introBlock = wp.blocks.createBlock('core/paragraph', {
+                        content: item.intro,
+                      });
+                      dispatch('core/block-editor').insertBlock(introBlock);
+                    }
+
+                    // Create and insert heading and paragraph blocks
+                    item.headings.forEach((heading, index) => {
+                      const headingBlock = wp.blocks.createBlock('core/heading', {
+                        content: heading,
+                        level: 2, // H2 heading
+                      });
+                      dispatch('core/block-editor').insertBlock(headingBlock);
+
+                      const paragraphBlock = wp.blocks.createBlock('core/paragraph', {
+                        content: item.paragraphs[index],
+                      });
+                      dispatch('core/block-editor').insertBlock(paragraphBlock);
+                    });
+                  }
                 }
                 else {
                       jQuery('#content-html').click();
                        //jQuery('#title').val(response.title);
                        jQuery('#title-prompt-text').text('');
-                      var currentContent = jQuery('.wp-editor-area').val();
-                      jQuery('.wp-editor-area').val(currentContent + content);
+                       var currentContent = jQuery('.wp-editor-area').val();
+
+                       // Append title if it exists
+                       if (item.title) {
+                         currentContent += '<h1>' + item.title + '</h1>\n';
+                       }
+                     
+                       // Append intro if it exists
+                       if (item.intro) {
+                         currentContent += '<p>' + item.intro + '</p>\n';
+                       }
+                     
+                       // Append headings and paragraphs
+                       item.headings.forEach((heading, index) => {
+                         currentContent += '<h2>' + heading + '</h2>\n';
+                         currentContent += '<p>' + item.paragraphs[index] + '</p>\n';
+                       });
+                     
+                       jQuery('.wp-editor-area').val(currentContent);
                 }
                 
                 //Cgpt_typeWriter('.editor-post-title',response.title);

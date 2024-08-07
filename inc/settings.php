@@ -9,7 +9,7 @@ class ChatGPTScheduler_Settings_Page {
 
     public function enqueue_custom_styles() {
         $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array('key'=>'trial'));
-        wp_enqueue_script( 'adminchatgpt', rapidtextai_chatgpt_scheduler_URL.'/js/admin.js?v=4.11', array('jquery'));
+        wp_enqueue_script( 'adminchatgpt', rapidtextai_chatgpt_scheduler_URL.'/js/admin.js?v=4.1130', array('jquery'));
         wp_localize_script('adminchatgpt', 'rapidtextaiURL', rapidtextai_chatgpt_scheduler_network);
         wp_localize_script('adminchatgpt', 'gigsixkey', $ChatGPTScheduler_settings_CBF['key']);
         wp_enqueue_script( 'adminchatgptTyped', rapidtextai_chatgpt_scheduler_URL.'/js/typed.min.js', array('jquery'));
@@ -168,15 +168,8 @@ class ChatGPTScheduler_Settings_Page {
             <tr>
                 <th>About the AI Model</th>
                 <td>
-                <h2>GPT-3</h2>
-                <p>GPT-3.5 models can understand and generate natural language or code. Our most capable and cost effective model in the GPT-3.5 family is gpt-3.5-turbo which has been optimized for chat but works well for traditional completions tasks as well.</p>
-                <p>gpt-3.5-turbo</p>
-                <p>Most capable GPT-3.5 model and optimized for chat at 1/10th the cost of text-davinci-003. Will be updated with our latest model iteration.</p>
-                <h3>Davinci</h3>
-
-                <p>Davinci is the most capable model family and can perform any task the other models can perform and often with less instruction. For applications requiring a lot of understanding of the content, like summarization for a specific audience and creative content generation, Davinci is going to produce the best results. These increased capabilities require more compute resources, so Davinci costs more per API call and is not as fast as the other models.<p>
-
-                <p>Another area where Davinci shines is in understanding the intent of text. Davinci is quite good at solving many kinds of logic problems and explaining the motives of characters. Davinci has been able to solve some of the most challenging AI problems involving cause and effect.</p>
+                <h2>RapidTextAI</h2>
+                <p>RAPIDTEXTAI.COM harness the power of artificial intelligence. Users can input information such as topic, keywords, industry, and desired highlights. Our AI system then generates content based on these inputs, helping you streamline your copywriting process.                .</p>
             </td>
             </tr>
             <tr>
