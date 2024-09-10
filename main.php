@@ -32,7 +32,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 
 
-define( 'rapidtextai_PLUGIN_VERSION', '1.5.1' );
+define( 'rapidtextai_PLUGIN_VERSION', '2.1.0' );
 define('rapidtextai_chatgpt_scheduler_URL', plugin_dir_url(__FILE__));
 define('rapidtextai_chatgpt_scheduler_PATH', dirname(__FILE__));
 define('rapidtextai_chatgpt_scheduler_network', 'https://app.rapidtextai.com/openai/');
