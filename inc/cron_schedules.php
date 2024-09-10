@@ -8,6 +8,11 @@ use Curl\Curl;
         add_action('cgpt_all_event_cron_schedule_event',array($this,'cgpt_cron_schedule_eventCBF'),1,2);
         //add_action('init',array($this,'cgpt_cron_schedule_eventCBFinit'));
         add_action('chatgpt_cron_schedules_schedule_it',array($this,'schedule_it'),1,2);
+        //add_action('init',array($this,'init'));
+      }
+      public function init(){
+        var_dump($this->cgpt_cron_schedule_eventCBF('cgpt_single_event',0));
+        exit;
       }
       public function schedule_it($pattern,$key){
         $chatGPT_schedule_settings =  get_option('chatGPT_schedule_settings',array());
@@ -71,7 +76,7 @@ use Curl\Curl;
               $curl->post(rapidtextai_chatgpt_scheduler_network.'detailedarticle-v2?gigsixkey='.$ChatGPTScheduler_settings_CBF['key'],array("topic"=>$Primary_Keyword,"temperature"=>$Temperature));
             }
             // Start output buffering
-            $helper->log($curl->response);
+            $helper->log('Response:'.print_r($curl->response,true));
             if (isset($curl->response)){
                 $content = $curl->response ? $helper->process_content_scheduler($curl->response) : $curl->response;
                 
@@ -90,4 +95,5 @@ use Curl\Curl;
       }
       
   } // class
+
   $ChatGPT_Cron_Schedules = new ChatGPT_Cron_Schedules;

@@ -73,7 +73,7 @@ jQuery(document).ready(function($) {
       $.ajax({
           type:'post',
           url:rapidtextaiURL+'detailedarticle-v2/?gigsixkey='+gigsixkey,
-          dataType:'text',
+          dataType:'json',
           data:{
             
             "topic": topic,"lang":lang,"temp":temp,"tone":tone
@@ -94,13 +94,13 @@ jQuery(document).ready(function($) {
 
                 
 
-                content = content.replace('```json', "");
+                //content = content.replace('```json', "");
                 // Replace \n\n# with <h2>
 
-                content = content.replace('```', "");
+                //content = content.replace('```', "");
                 console.log(content);
                 // parse content as json
-                content = JSON.parse(content);
+                //content = JSON.parse(content);
 
                 
                 //content = content.replace(/\n\n#/g, "<h2>");
@@ -113,20 +113,21 @@ jQuery(document).ready(function($) {
 
                 // Add opening <p> at the start and closing </p> at the end
                 //content = "<p>" + content + "</p>";
-
-                if (typeof wp !== 'undefined' && typeof wp.data !== 'undefined' && typeof wp.blocks !== 'undefined' && content.length) {
+                const item = content;
+                if (typeof wp !== 'undefined' && typeof wp.blocks !== 'undefined') {
                   const { dispatch } = wp.data;
                   // Insert a new paragraph block with custom text
                   // Access the first element of the content array
-                  const item = content[0];
-                  if (item.msg === 'successfully generated') {
+                  
+                  
                     // Create and insert title block
                     if (item.title) {
-                      const titleBlock = wp.blocks.createBlock('core/heading', {
-                        content: item.title,
-                        level: 1, // H1 heading
-                      });
-                      dispatch('core/block-editor').insertBlock(titleBlock);
+                      dispatch('core/editor').editPost({ title: item.title });
+                      // const titleBlock = wp.blocks.createBlock('core/heading', {
+                      //   content: item.title,
+                      //   level: 1, // H1 heading
+                      // });
+                      // dispatch('core/block-editor').insertBlock(titleBlock);
                     }
 
                     // Create and insert intro block
@@ -150,7 +151,7 @@ jQuery(document).ready(function($) {
                       });
                       dispatch('core/block-editor').insertBlock(paragraphBlock);
                     });
-                  }
+                  
                 }
                 else {
                       jQuery('#content-html').click();

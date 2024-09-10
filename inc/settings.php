@@ -9,16 +9,15 @@ class ChatGPTScheduler_Settings_Page {
 
     public function enqueue_custom_styles() {
         $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array('key'=>'trial'));
-        wp_enqueue_script( 'adminchatgpt', rapidtextai_chatgpt_scheduler_URL.'/js/admin.js?v=4.1130', array('jquery'));
-        wp_localize_script('adminchatgpt', 'rapidtextaiURL', rapidtextai_chatgpt_scheduler_network);
-        wp_localize_script('adminchatgpt', 'gigsixkey', $ChatGPTScheduler_settings_CBF['key']);
+        wp_enqueue_script( 'adminchatgpt', rapidtextai_chatgpt_scheduler_URL.'/js/admin.js?v=4.1146', array('jquery'));
+        wp_add_inline_script('adminchatgpt', 'var rapidtextaiURL = "' . rapidtextai_chatgpt_scheduler_network . '"; var gigsixkey = "' . $ChatGPTScheduler_settings_CBF['key'] . '";');
         wp_enqueue_script( 'adminchatgptTyped', rapidtextai_chatgpt_scheduler_URL.'/js/typed.min.js', array('jquery'));
         wp_enqueue_style( 'adminchatgpt_css',rapidtextai_chatgpt_scheduler_URL.'/css/admin.css');
     }              
 
 	public function wph_create_settings() {
-		$page_title = 'ChatGPT Scheduler';
-		$menu_title = 'ChatGPT Scheduler';
+		$page_title = 'RapidTextAI Scheduler';
+		$menu_title = 'RapidTextAI Scheduler';
 		$capability = 'manage_options';
 		$slug = 'ChatGPTScheduler';
 		$callback = array($this, 'wph_settings_content');
@@ -57,7 +56,7 @@ class ChatGPTScheduler_Settings_Page {
    
         ?>
 		<div class="wrap">
-			<h1><?php _e('ChatGPT Scheduler','rapidtextai_chatgpt_scheduler') ?></h1>
+			<h1><?php _e('RapidTextAI Scheduler','rapidtextai_chatgpt_scheduler') ?></h1>
             <?php echo $message?>
             <form name="chatGPT_schedule_settings" id="chatGPT_schedule_settings" method="POST">
                 <table id="wrapper_content" class="wp-list-table widefat striped ChatGPT_scheduler_Table">

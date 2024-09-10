@@ -14,8 +14,8 @@ class rapidtextai_chatgpt_scheduler_Helper {
             $curl->post(rapidtextai_chatgpt_scheduler_network.'detailedarticle-v2/?gigsixkey='.$ChatGPTScheduler_settings_CBF['key'],array("topic"=>$topic,"temperature"=>$temprature,"language"=>$lang,"tone"=>$tone));
 
             if(isset($curl->response->content)){
-                $content = str_replace('```json','',$curl->response->content);
-                $content = str_replace('```','',$content);
+                //$content = str_replace('```json','',$curl->response->content);
+                //$content = str_replace('```','',$content);
                 $content = $this->process_content($curl->response);
                 
                 //$title = $curl->response->title;
@@ -43,25 +43,30 @@ class rapidtextai_chatgpt_scheduler_Helper {
 
     }
     public function process_content_scheduler($content){
-        $content = str_replace('```json','',$content);
-        $content = str_replace('```','',$content);
-        $content_array = json_decode($content);
-        $content_array = $content_array[0];
-        $this->log('Content Array');
-        $this->log(print_r($content_array,true));
-        $paras =$content_array->paragraphs;
-        $context = '<ul>';
-        $main_content = '';
-        $intro ='<p>'.$content_array->intro.'</p>';
-        foreach($content_array->headings as $k => $headings){
-            $context.='<li><a href="#section_'.$k.'">'.$headings.'</a></li>';
-            $main_content.='<p>'.(is_array($paras[$k]) ? $paras[$k][0]  : $paras[$k]).'</p>';
+        
+        $content_array = $content;
+        if(isset($content_array->paragraphs) && is_array($content_array->paragraphs)){
+            //$content_array = $content_array[0];
+            $this->log('Content Array');
+            $this->log(print_r($content_array,true));
+            $paras =$content_array->paragraphs;
+            $context = '<ul>';
+            $main_content = '';
+            $intro ='<p>'.$content_array->intro.'</p>';
+            foreach($content_array->headings as $k => $headings){
+                $context.='<li><a href="#section_'.$k.'">'.$headings.'</a></li>';
+                $main_content.='<h2 id="section_'.$k.'">'.$headings.'</h2>';
+                $main_content.='<p>'.(is_array($paras[$k]) ? $paras[$k][0]  : $paras[$k]).'</p>';
+            }
+            $context.='</ul>';
+            $result = $context.$intro.$main_content;        
+            //var_dump($content);
+            //exit;
+            return ['title'=>$content_array->title,'content'=>$result];
         }
-        $context.='</ul>';
-        $result = $context.$intro.$main_content;        
-        //var_dump($content);
-        //exit;
-        return ['title'=>$content_array->title,'content'=>$result];
+        else {
+            return ['title'=>'','content'=>''];
+        }
     }
     public function get_post_types_dropdown($selected='') {
         $post_types = get_post_types(array('public' => true), 'objects');
