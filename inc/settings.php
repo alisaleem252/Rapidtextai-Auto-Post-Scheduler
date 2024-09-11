@@ -71,7 +71,7 @@ class ChatGPTScheduler_Settings_Page {
                         <th><?php _e('Add/ Remove','rapidtextai_chatgpt_scheduler') ?></th>
                     </tr>
                     <tr id="copy_content">
-                        <td><?php _e('ChatGPT','rapidtextai_chatgpt_scheduler') ?></td>
+                        <td><?php _e('Custom','rapidtextai_chatgpt_scheduler') ?></td>
                         <td><input type="text" name="chatGPT_schedule_settings[Primary_Keyword][]" class="Primary_Keyword" value="<?php echo $Primary_Keyword_0?>" /></td>
                         <td><input class="range-slider__range" name="chatGPT_schedule_settings[Temperature][]" type="range" value="<?php echo $Temperature_0?>" min="0" max="1" step="0.1" /><span class="range-slider__value"><?php echo $Temperature_0?></span></td>
                         <td><?php echo $helper->get_template_posts_dropdown($Template_Post_0)?></td>
