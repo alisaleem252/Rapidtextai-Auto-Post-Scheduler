@@ -1,7 +1,7 @@
 # Rapidtextai Auto Post Scheduler
 
 Contributors: alisaleem252, Rapidtextai  
-Tags: chatgpt, schedule, auto posting, chatgpt3  
+Tags: chatgpt, schedule, auto posting, chatgpt3, gpt4, rapidtextai, gemini, claude, ai text, ai text generation, auto pilot, ai auto pilot  
 Requires at least: 4.2  
 Tested up to: 6.1  
 Stable tag: 1.15.1  
