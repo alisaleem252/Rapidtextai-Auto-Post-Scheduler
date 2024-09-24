@@ -14,7 +14,7 @@ Rapidtextai Post Scheduler Lets to schedule your posting using ChatGPT3.
 
 ## Description
 
-Rapidtextai Auto Post Scheduler is a WordPress plugin that allows users to schedule automatic posts using the power of OpenAI's ChatGPT language model. With this plugin, you can easily create and schedule blog posts without having to manually write each one.:
+Rapidtextai Auto Post Scheduler is a WordPress plugin that allows users to schedule automatic posts using the power of Rapidtextai language model. With this plugin, you can easily create and schedule blog posts without having to manually write each one.:
 
 * Schedule posts for future publication.
 * Automatically generate content for your posts using ChatGPT's language model.
@@ -33,8 +33,8 @@ Rapidtextai Auto Post Scheduler is a WordPress plugin that allows users to sched
 
 
 ## Usage
-* Navigate to the ChatGPT Auto Post Scheduler settings page.
-* Enter your Rapidtextai Connect key and save the settings.
+* Navigate to the RapidtextAI Auto Post Scheduler settings page.
+* Enter your Rapidtextai API key and save the settings.
 * Create a new post in WordPress Choose topic and click on the "Generate" button.
 * Wait for the post content to load.
 * Review and edit the generated content as needed.
@@ -43,7 +43,7 @@ Rapidtextai Auto Post Scheduler is a WordPress plugin that allows users to sched
 
 ### Bulk Scheduling
 * Create an empty post with categories, tags.
-* From the dropdown "Use this as ChatGPT Template" select yes.
+* From the dropdown "Use this as RapidtextAI Template" select yes.
 * Save the post as draft.
 * From the bulk scheduler, select that template, write the topic, select temprature and timings.
 
