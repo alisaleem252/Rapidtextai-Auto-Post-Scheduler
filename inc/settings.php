@@ -5,6 +5,7 @@ class ChatGPTScheduler_Settings_Page {
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'wph_create_settings' ) );
         add_action( 'admin_enqueue_scripts', array( $this,'enqueue_custom_styles') );
+        add_action( 'wp_ajax_rapidtextai_save_api_key', array( $this, 'rapidtextai_save_api_key' ) );
 	}
 
     public function enqueue_custom_styles() {
@@ -113,55 +114,29 @@ class ChatGPTScheduler_Settings_Page {
     <h1><?php _e('Settings','rapidtextai_chatgpt_scheduler') ?></h1>
     <form name="ChatGPTScheduler_settings_CBF" method="POST">
         <table class="form-table" role="presentation">
+                <tr>
+                    <th scope="row"><label><?php esc_html_e('RapidTextAI Authentication', 'rapidtextai'); ?></label></th>
+                    <td>
+                        <input id="api_key" type="hidden" name="ChatGPTScheduler_settings_CBF[key]" value="<?php echo $ChatGPTScheduler_settings_CBF['key']; ?>" class="regular-text" />
+                        <button type="button" id="rapidtextai_auth_button" class="button button-primary"><?php esc_html_e('Authenticate with RapidTextAI', 'rapidtextai'); ?></button>
+                        <p id="rapidtextai_status_message"></p>
+                        <?php if (!empty($ChatGPTScheduler_settings_CBF['key'])) { ?>
+                            <p><?php esc_html_e('API Key is already set. You can authenticate again to refresh the key.', 'rapidtextai'); ?></p>
+                        <?php } ?>
+                    </td>
+                </tr>
+            <!-- add a radio to enable to disable service -->
             <tr>
-                <th><?php _e('rapidtextai Connect Key','rapidtextai_chatgpt_scheduler') ?></th>
-                <td><input name="ChatGPTScheduler_settings_CBF[key]" type="text" value="<?php echo (isset($ChatGPTScheduler_settings_CBF['key']) ? $ChatGPTScheduler_settings_CBF['key'] : '')?>" class="regular-text" /> <a target="_blank" href="https://app.rapidtextai.com"><?php _e('Get Rapidtextai Connect Key','rapidtextai_chatgpt_scheduler') ?></a></td>                
+                <th><?php _e('Enable/Disable Auto Blogging','rapidtextai_chatgpt_scheduler') ?></th>
+                <td>
+                    <input type="radio" name="ChatGPTScheduler_settings_CBF[service]" value="enable" <?php echo (isset($ChatGPTScheduler_settings_CBF['service']) && $ChatGPTScheduler_settings_CBF['service'] == 'enable' ? 'checked' : '')?> /> <?php _e('Enable','rapidtextai_chatgpt_scheduler') ?>
+                    <input type="radio" name="ChatGPTScheduler_settings_CBF[service]" value="disable" <?php echo (isset($ChatGPTScheduler_settings_CBF['service']) && $ChatGPTScheduler_settings_CBF['service'] == 'disable' ? 'checked' : '')?> /> <?php _e('Disable','rapidtextai_chatgpt_scheduler') ?>
+                </td>
             </tr>
             <tr>
                 <th><?php _e('Status of rapidtextai Connect Key Subscription','rapidtextai_chatgpt_scheduler') ?></th>
                 <td>
-    <?php if (isset($curl->response)){ 
-            $response_data = json_decode($curl->response);
-            
-            if(isset($response_data->response_code)){
-                if($response_data->response_code == 1 || $response_data->response_code == 2 || $response_data->response_code == 4){
-                    $code = $response_data->response_code;?>
-                    <table class="form-table">
-                        <tr>
-                            <th><?php _e('Created','rapidtextai_chatgpt_scheduler') ?></th>
-                            <td><?php echo ($code == 1 ? $response_data->create_at : 'N/A')?></td>
-                        </tr>
-                        <tr>
-                            <th><?php _e('Status','rapidtextai_chatgpt_scheduler') ?></th>
-                            <td><?php echo ($code == 4 ? $response_data->subscription_status : 'Trial')?></td>
-                        </tr>
-                        <tr>
-                            <th><?php _e('Interval','rapidtextai_chatgpt_scheduler') ?></th>
-                            <td><?php echo ($code == 1 ? $response_data->subscription_interval : 'N/A')?></td>
-                        </tr>
-                        <tr>
-                            <th><?php _e('Start','rapidtextai_chatgpt_scheduler') ?></th>
-                            <td><?php echo ($code == 1 ? $response_data->current_period_start : 'N/A')?></td>
-                        </tr>
-                        <tr>
-                            <th><?php _e('End','rapidtextai_chatgpt_scheduler') ?></th>
-                            <td><?php echo ($code == 1 ? $response_data->current_period_end : 'N/A')?></td>
-                        </tr>
-                        <tr>
-                            <th><?php _e('Requests','rapidtextai_chatgpt_scheduler') ?></th>
-                            <td><?php echo ($code == 1 ? $response_data->requests.'/ ∞' : $response_data->requests.'/ 100')?></td>
-                        </tr>
-                    </table>
-    <?php 
-                }
-                else
-                    echo $response_data->message;
-            }
-        } //if (isset($curl->response->response_code)){ 
-        else
-            $curl->errorMessage
-            ?>  
-
+                    <div id="rapidtextai_status">Loading...</div>
                 </td>                
             </tr>
             <tr>
@@ -181,10 +156,103 @@ class ChatGPTScheduler_Settings_Page {
             <input type="submit" name="ChatGPTScheduler_settings_CBF_submitBtn" value="Save Settings" class="button button-primary" />
         </p>
     </form>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $('#rapidtextai_auth_button').on('click', function(e) {
+                e.preventDefault();
+                var authWindow = window.open('https://app.rapidtextai.com/log-in?action=popup', 'RapidTextAIAuth', 'width=500,height=600');
+            });
+
+            window.addEventListener('message', function(event) {
+                // Only accept messages from the trusted RapidTextAI origin
+                alert('Authenticated');
+                if (event.origin === 'https://app.rapidtextai.com') {
+                    var apiKey = event.data.api_key;
+                    if (apiKey) {
+                        $('#rapidtextai_status_message').html('Authentication successful! Saving API key...');
+
+                        $.post(ajaxurl, {
+                            action: 'rapidtextai_save_api_key',
+                            api_key: apiKey,
+                            _wpnonce: '<?php echo wp_create_nonce('rapidtextai_save_api_key_nonce'); ?>'
+                        }, function(response) {
+                            $('#rapidtextai_status_message').html(response.message);
+                            $('#api_key').val(apiKey);
+                        });
+                    }
+                }
+            });
+
+            /** Get Response using API */
+        });
+
+        jQuery(document).ready(function($) {
+            // Get the connect key from the input field
+            var connectKey = '<?php echo $ChatGPTScheduler_settings_CBF['key']; ?>';
+
+            // Make the AJAX request using jQuery
+            $.ajax({
+                url: 'https://app.rapidtextai.com/api.php',
+                type: 'GET',
+                data: {
+                    gigsixkey: connectKey
+                },
+                dataType: 'json',
+                success: function(response_data) {
+                    var output = '';
+
+                    if (response_data.response_code) {
+                        var code = response_data.response_code;
+
+                        if (code == 1 || code == 2 || code == 4) {
+                            output += '<table class="form-table">';
+                            output += '<tr><th>Created</th><td>' + (code == 1 ? response_data.create_at : 'N/A') + '</td></tr>';
+                            output += '<tr><th>Status</th><td>' + (code == 1 ? response_data.subscription_status : 'Trial') + '</td></tr>';
+                            output += '<tr><th>Interval</th><td>' + (code == 1 ? response_data.subscription_interval : 'N/A') + '</td></tr>';
+                            output += '<tr><th>Start</th><td>' + (code == 1 ? response_data.current_period_start : 'N/A') + '</td></tr>';
+                            output += '<tr><th>End</th><td>' + (code == 1 ? response_data.current_period_end : 'N/A') + '</td></tr>';
+                            output += '<tr><th>Requests</th><td>' + (code == 1 ? response_data.requests + '/ ∞' : response_data.requests + '/ 100') + '</td></tr>';
+                            output += '</table>';
+                        } else {
+                            output = response_data.message;
+                        }
+                    } else {
+                        output = 'Error retrieving data';
+                    }
+
+                    // Place the response in the div with id rapidtextai_status
+                    $('#rapidtextai_status').html(output);
+                },
+                error: function() {
+                    $('#rapidtextai_status').html('Error connecting to the server');
+                }
+            });
+        });
+
+    </script>
 <?php
     if(isset($_REQUEST['debug'])){
     echo '<textarea rows="20" cols="150">'.get_option('mam_fbads_debug').'</textarea>';}
     }
+
+    function rapidtextai_save_api_key() {
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(array('message' => 'Permission denied.'));
+        }
+
+        if (!isset($_POST['_wpnonce']) || !wp_verify_nonce(sanitize_text_field($_POST['_wpnonce']), 'rapidtextai_save_api_key_nonce')) {
+            wp_send_json_error(array('message' => 'Nonce verification failed.'));
+        }
+
+        $api_key = sanitize_text_field($_POST['api_key']);
+        $ChatGPTScheduler_settings_CBF = get_option('ChatGPTScheduler_settings_CBF');
+        $ChatGPTScheduler_settings_CBF['key'] = $api_key;
+        update_option('ChatGPTScheduler_settings_CBF', $ChatGPTScheduler_settings_CBF);
+
+        wp_send_json_success(array('message' => 'API Key saved successfully.'));
+    }
+
     
 }//class
 new ChatGPTScheduler_Settings_Page();

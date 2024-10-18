@@ -50,6 +50,7 @@ use Curl\Curl;
         return $schedules;
       }
       public function cgpt_cron_schedule_eventCBF($pattern, $key){
+
         $helper = new rapidtextai_chatgpt_scheduler_Helper;
         $helper->log('Hook running');
         $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array('key'=>'trial'));
@@ -60,7 +61,11 @@ use Curl\Curl;
           $Pattern=$chatGPT_schedule_settings['Pattern'][$key];
           $post_status=$chatGPT_schedule_settings['post_status'][$key];
           $Temperature=$chatGPT_schedule_settings['Temperature'][$key];
-          
+
+          // check if service is enabled
+          if($ChatGPTScheduler_settings_CBF['service'] !== 'enable'){
+            return;
+          }
           if(isset($ChatGPTScheduler_settings_CBF['key']) && trim($ChatGPTScheduler_settings_CBF['key']) !=''){
             $helper->log('Key Set');
             $curl = new Curl();
