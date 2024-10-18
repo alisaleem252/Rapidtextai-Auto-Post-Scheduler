@@ -1,4 +1,4 @@
-# Rapidtextai Auto Post Scheduler
+# Rapidtextai WordPress Auto Blogging
 
 Contributors: alisaleem252, Rapidtextai  
 Tags: chatgpt, schedule, auto posting, chatgpt3  
@@ -10,11 +10,11 @@ License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://app.rapidtextai.com
 
-Rapidtextai Post Scheduler Lets to schedule your posting using ChatGPT3.
+Rapidtextai WordPress AI Auto Blogging ets to schedule your posting using GPT 3.5, GPT4, Gemini 1.5.
 
 ## Description
 
-Rapidtextai Auto Post Scheduler is a WordPress plugin that allows users to schedule automatic posts using the power of OpenAI's ChatGPT language model. With this plugin, you can easily create and schedule blog posts without having to manually write each one.:
+Rapidtextai WordPress AI Auto Blogging is a WordPress plugin that allows users to schedule automatic posts using the power of OpenAI's ChatGPT language model. With this plugin, you can easily create and schedule blog posts without having to manually write each one.:
 
 * Schedule posts for future publication.
 * Automatically generate content for your posts using ChatGPT's language model.

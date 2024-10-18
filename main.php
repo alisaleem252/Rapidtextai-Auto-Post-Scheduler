@@ -13,7 +13,7 @@
  * @package           Rapidtextai_rapidtextai_chatgpt_scheduler
  *
  * @wordpress-plugin
- * Plugin Name:       RapidtextAI Auto Post Scheduler
+ * Plugin Name:       Rapidtextai WordPress AI Auto Blogging
  * Plugin URI:        https://app.rapidtextai.com
  * Description:       Generate AI Content for your WordPress Posts.
  * Version:           2.1.0
