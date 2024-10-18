@@ -1,7 +1,7 @@
 # Rapidtextai WordPress Auto Blogging
 
 Contributors: alisaleem252, Rapidtextai  
-Tags: chatgpt, schedule, auto posting, chatgpt3  
+Tags: chatgpt, schedule, auto posting, chatgpt3, gpt4, rapidtextai, gemini, claude, ai text, ai text generation, auto pilot, ai auto pilot  
 Requires at least: 4.2  
 Tested up to: 6.1  
 Stable tag: 1.15.1  
@@ -33,8 +33,8 @@ Rapidtextai WordPress AI Auto Blogging is a WordPress plugin that allows users t
 
 
 ## Usage
-* Navigate to the ChatGPT Auto Post Scheduler settings page.
-* Enter your Rapidtextai Connect key and save the settings.
+* Navigate to the RapidtextAI Auto Post Scheduler settings page.
+* Enter your Rapidtextai API key and save the settings.
 * Create a new post in WordPress Choose topic and click on the "Generate" button.
 * Wait for the post content to load.
 * Review and edit the generated content as needed.
@@ -43,7 +43,7 @@ Rapidtextai WordPress AI Auto Blogging is a WordPress plugin that allows users t
 
 ### Bulk Scheduling
 * Create an empty post with categories, tags.
-* From the dropdown "Use this as ChatGPT Template" select yes.
+* From the dropdown "Use this as RapidtextAI Template" select yes.
 * Save the post as draft.
 * From the bulk scheduler, select that template, write the topic, select temprature and timings.
 
