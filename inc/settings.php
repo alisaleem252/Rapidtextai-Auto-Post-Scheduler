@@ -10,10 +10,10 @@ class ChatGPTScheduler_Settings_Page {
 
     public function enqueue_custom_styles() {
         $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array('key'=>'trial'));
-        wp_enqueue_script( 'adminchatgpt', rapidtextai_chatgpt_scheduler_URL.'/js/admin.js?v=4.1146', array('jquery'));
+        wp_enqueue_script( 'adminchatgpt', rapidtextai_chatgpt_scheduler_URL.'/js/admin.js?v=4.1154', array('jquery'));
         wp_add_inline_script('adminchatgpt', 'var rapidtextaiURL = "' . rapidtextai_chatgpt_scheduler_network . '"; var gigsixkey = "' . $ChatGPTScheduler_settings_CBF['key'] . '";');
         wp_enqueue_script( 'adminchatgptTyped', rapidtextai_chatgpt_scheduler_URL.'/js/typed.min.js', array('jquery'));
-        wp_enqueue_style( 'adminchatgpt_css',rapidtextai_chatgpt_scheduler_URL.'/css/admin.css');
+        wp_enqueue_style( 'adminchatgpt_css',rapidtextai_chatgpt_scheduler_URL.'/css/admin.css?v=4.1151');
     }              
 
 	public function wph_create_settings() {
@@ -45,6 +45,7 @@ class ChatGPTScheduler_Settings_Page {
         $chatGPT_schedule_settings =  get_option('chatGPT_schedule_settings',array());
       
         $Primary_Keyword_0 = isset($chatGPT_schedule_settings['Primary_Keyword'][0]) ? $chatGPT_schedule_settings['Primary_Keyword'][0] : '';
+        $Primary_Keyword2 = isset($chatGPT_schedule_settings['Primary_Keyword2'][0]) ? $chatGPT_schedule_settings['Primary_Keyword2'][0] : '';
         $Template_Post_0 = isset($chatGPT_schedule_settings['Template_Post'][0]) ? $chatGPT_schedule_settings['Template_Post'][0] : '';
         $tax_slug_0 = isset($chatGPT_schedule_settings['tax_slug'][0]) ? $chatGPT_schedule_settings['tax_slug'][0] : '';
         $tax_label_0 = isset($chatGPT_schedule_settings['tax_label'][0]) ? $chatGPT_schedule_settings['tax_label'][0] : '';
@@ -62,30 +63,47 @@ class ChatGPTScheduler_Settings_Page {
             <form name="chatGPT_schedule_settings" id="chatGPT_schedule_settings" method="POST">
                 <table id="wrapper_content" class="wp-list-table widefat striped ChatGPT_scheduler_Table">
                     <tr>
-                        <th><?php _e('Prompt Type','rapidtextai_chatgpt_scheduler') ?></th>
-                        <th><?php _e('Topic','rapidtextai_chatgpt_scheduler') ?></th>
-                        <th><?php _e('Temperature','rapidtextai_chatgpt_scheduler') ?></th>
-                        <th><?php _e('Template Posts','rapidtextai_chatgpt_scheduler') ?></td>
-                        <th><?php _e('Schedule Time ','rapidtextai_chatgpt_scheduler'); echo date('d/m/y h:i A') ?></th>
-                        <th><?php _e('Schedule Pattern','rapidtextai_chatgpt_scheduler') ?></th>
-                        <th><?php _e('Post Status','rapidtextai_chatgpt_scheduler') ?></th>
-                        <th><?php _e('Add/ Remove','rapidtextai_chatgpt_scheduler') ?></th>
-                    </tr>
-                    <tr id="copy_content">
+                        <td><?php _e('Prompt Type','rapidtextai_chatgpt_scheduler') ?></td>
                         <td><?php _e('Custom','rapidtextai_chatgpt_scheduler') ?></td>
+                    </tr>
+                    <tr>
+                        <td><?php _e('Topic','rapidtextai_chatgpt_scheduler') ?></td>
                         <td><input type="text" name="chatGPT_schedule_settings[Primary_Keyword][]" class="Primary_Keyword" value="<?php echo $Primary_Keyword_0?>" /></td>
+                    </tr>
+                    <tr>
+                        <td><?php _e('Keywords','rapidtextai_chatgpt_scheduler') ?></td>
+                        <td><input type="text" name="chatGPT_schedule_settings[Primary_Keyword2][]" class="Primary_Keyword2" value="<?php echo $Primary_Keyword2?>" /></td>
+                    </tr>
+                    <tr>
+                        <td><?php _e('Temperature','rapidtextai_chatgpt_scheduler') ?></td>
                         <td><input class="range-slider__range" name="chatGPT_schedule_settings[Temperature][]" type="range" value="<?php echo $Temperature_0?>" min="0" max="1" step="0.1" /><span class="range-slider__value"><?php echo $Temperature_0?></span></td>
+                    </tr>
+                    <tr>
+                        <td><?php _e('Template Posts','rapidtextai_chatgpt_scheduler') ?></td>
                         <td><?php echo $helper->get_template_posts_dropdown($Template_Post_0)?></td>
+                    </tr>
+                    <tr>
+                        <td><?php _e('Schedule Time ','rapidtextai_chatgpt_scheduler'); echo date('d/m/y h:i A') ?></td>
                         <td><input type="datetime-local" class="time" name="chatGPT_schedule_settings[time][]" value="<?php echo $time_0?>" /></td>
+                    </tr>
+                    <tr>
+                        <td><?php _e('Schedule Pattern','rapidtextai_chatgpt_scheduler') ?></td>
                         <td><?php echo $helper->schedule_pattern_dropdown($Pattern_0)?></td>
+                    </tr>
+                    <tr>
+                        <td><?php _e('Post Status','rapidtextai_chatgpt_scheduler') ?></td>
                         <td><?php echo $helper->schedule_post_status_dropdown($post_status_0)?></td>
+                    </tr>
+                    <tr>
+                        <td><?php _e('Add/ Remove','rapidtextai_chatgpt_scheduler') ?></td>
                         <td><span id="ChatGPT_scheduler_copy" class="dashicons dashicons-plus-alt add_record"></span></td>
-                    <?php 
-                  if(isset($chatGPT_schedule_settings['Primary_Keyword']) && is_array($chatGPT_schedule_settings['Primary_Keyword']) && count($chatGPT_schedule_settings['Primary_Keyword']) > 1)
-                    echo $helper->get_saved_schedules()?>
-
-                        
+                    </tr>
+                    
                 </table>
+                
+                <?php 
+                    if(isset($chatGPT_schedule_settings['Primary_Keyword']) && is_array($chatGPT_schedule_settings['Primary_Keyword']) && count($chatGPT_schedule_settings['Primary_Keyword']) > 1)
+                        echo $helper->get_saved_schedules()?>
                 
                 <p>
                     <input type="submit" name="chatGPT_schedule_settings_submitBtn" value="<?php _e('Save Settings','rapidtextai_chatgpt_scheduler') ?>" class="button button-primary" />

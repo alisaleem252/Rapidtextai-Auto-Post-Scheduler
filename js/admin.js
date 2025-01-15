@@ -25,12 +25,16 @@ jQuery(document).ready(function($) {
     });
 
     $(document.body).off('click', '.add_record').on('click', '.add_record',function(e) {     
-      var copy_content = $('#copy_content').html();
-     $('#wrapper_content').append('<tr>'+copy_content+'</tr>');
+      var copy_content = $('#wrapper_content').html();
+      copy_content = copy_content.replace(
+        '<span id="ChatGPT_scheduler_copy" class="dashicons dashicons-plus-alt add_record"></span>',
+        '<span id="ChatGPT_scheduler_copy" class="dashicons dashicons-plus-alt add_record"></span><span class="remove_record dashicons dashicons-trash"></span>'
+      );
+     $('#wrapper_content').after('<table class="wp-list-table widefat striped ChatGPT_scheduler_Table">'+copy_content+'</table>');
     });
 
     $(document.body).off('click', '.remove_record').on('click', '.remove_record',function(e) {     
-      $(this).parent().parent().remove();
+      $(this).parent().parent().parent().parent().remove();
     });
 
     $(document.body).off('mousemove', '.range-slider__range').on('mousemove', '.range-slider__range',function(e) {     
@@ -208,7 +212,9 @@ jQuery(document).ready(function($) {
   
 
 jQuery('#ChatGPT_scheduler_copy').on('click',function(){
-    jQuery(this).parent().clone().appendTo('.ChatGPT_scheduler_Table');
+  alert('copied');
+    var html = jQuery(this).parent().parent().parent();
+    jQuery('#ChatGPT_scheduler_Table').next(html);
 });
 jQuery('#ChatGPT_scheduler_remove').on('click',function(){
     jQuery(this).parent().remove();

@@ -1,5 +1,5 @@
 # Rapidtextai WordPress AI Auto Blogging
-
+[![Watch the video](https://img.youtube.com/vi/5FhAb54Lw4g/0.jpg)](https://youtu.be/5FhAb54Lw
 Contributors: alisaleem252, Rapidtextai  
 Tags: chatgpt, schedule, auto posting, chatgpt3, gpt4, rapidtextai, gemini, claude, ai text, ai text generation, auto pilot, ai auto pilot  
 Requires at least: 4.2  

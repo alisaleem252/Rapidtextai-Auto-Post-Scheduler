@@ -71,7 +71,7 @@
         <?php
         
         echo '<div>';
-        echo '<label class="components-truncate components-text components-input-control__label em5sgkm4 css-1imalal e19lxcc00">'.__('Use this as ChatGPT Template','rapidtextai_chatgpt_scheduler').'</label>';
+        echo '<label class="components-truncate components-text components-input-control__label em5sgkm4 css-1imalal e19lxcc00">'.__('Use this as Rapidtextai Template','rapidtextai_chatgpt_scheduler').'</label>';
         echo '</div>';echo '<div>';
         echo '<select name="chatgpt_used_as_cgpt_templater">
                 <option value="no">No</option>

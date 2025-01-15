@@ -112,17 +112,48 @@ class rapidtextai_chatgpt_scheduler_Helper {
                     
                 $tax_terms = isset($chatGPT_schedule_settings['taxonomy_terms']) ? $chatGPT_schedule_settings['taxonomy_terms'] : array();
                     ?>
-                  
-                    <tr>
-                        <td>ChatGPT</td>
-                        <td><input type="text" name="chatGPT_schedule_settings[Primary_Keyword][]" class="Primary_Keyword" value="<?php echo $chatGPT_schedule_settings['Primary_Keyword'][$index]?>" /></td>
-                        <td><input type="range" name="chatGPT_schedule_settings[Temperature][]" class="range-slider__range" value="<?php echo $chatGPT_schedule_settings['Temperature'][$index]?>" min="0" max="1" step="0.1" /> <span class="range-slider__value"><?php echo $chatGPT_schedule_settings['Temperature'][$index]?></span></td>
-                        <td><?php echo $this->get_template_posts_dropdown( $chatGPT_schedule_settings['Template_Post'][$index])?></td>
-                        <td><input type="datetime-local" name="chatGPT_schedule_settings[time][]" class="time" value="<?php echo $chatGPT_schedule_settings['time'][$index]?>" /></td>
-                        <td><?php echo $this->schedule_pattern_dropdown($chatGPT_schedule_settings['Pattern'][$index])?></td>
-                        <td><?php echo $this->schedule_post_status_dropdown($chatGPT_schedule_settings['post_status'][$index])?></td>
-                        <td><span id="ChatGPT_scheduler_copy_<?php echo $index?>" class="dashicons dashicons-dismiss remove_record"></span></td>
-                    </tr>
+                 <table class="wp-list-table widefat striped ChatGPT_scheduler_Table">
+                    <tbody>
+                        <tr>
+                            <td><?php _e('Prompt Type','rapidtextai_chatgpt_scheduler') ?></td>
+                            <td><?php _e('Custom','rapidtextai_chatgpt_scheduler') ?></td>
+                        </tr>
+                        <tr>
+                            <td><?php _e('Topic','rapidtextai_chatgpt_scheduler') ?></td>
+                            <td><input type="text" name="chatGPT_schedule_settings[Primary_Keyword][]" class="Primary_Keyword" value="<?php echo $chatGPT_schedule_settings['Primary_Keyword'][$index]?>" /></td>
+                        </tr>
+                        <tr>
+                            <td><?php _e('Keywords','rapidtextai_chatgpt_scheduler') ?></td>
+                            <td><input type="text" name="chatGPT_schedule_settings[Primary_Keyword2][]" class="Primary_Keyword" value="<?php echo $chatGPT_schedule_settings['Primary_Keyword2'][$index]?>" /></td>
+                        </tr>
+                        <tr>
+                            <td><?php _e('Temperature','rapidtextai_chatgpt_scheduler') ?></td>
+                            <td><input type="range" name="chatGPT_schedule_settings[Temperature][]" class="range-slider__range" value="<?php echo $chatGPT_schedule_settings['Temperature'][$index]?>" min="0" max="1" step="0.1" /> <span class="range-slider__value"><?php echo $chatGPT_schedule_settings['Temperature'][$index]?></span></td>
+                        </tr>
+                        <tr>
+                            <td><?php _e('Template Posts','rapidtextai_chatgpt_scheduler') ?></td>
+                            <td><?php echo $this->get_template_posts_dropdown($chatGPT_schedule_settings['Template_Post'][$index])?></td>
+                        </tr>
+                        <tr>
+                            <td><?php _e('Schedule Time','rapidtextai_chatgpt_scheduler') ?></td>
+                            <td><input type="datetime-local" name="chatGPT_schedule_settings[time][]" class="time" value="<?php echo $chatGPT_schedule_settings['time'][$index]?>" /></td>
+                        </tr>
+                        <tr>
+                            <td><?php _e('Schedule Pattern','rapidtextai_chatgpt_scheduler') ?></td>
+                            <td><?php echo $this->schedule_pattern_dropdown($chatGPT_schedule_settings['Pattern'][$index])?></td>
+                        </tr>
+                        <tr>
+                            <td><?php _e('Post Status','rapidtextai_chatgpt_scheduler') ?></td>
+                            <td><?php echo $this->schedule_post_status_dropdown($chatGPT_schedule_settings['post_status'][$index])?></td>
+                        </tr>
+                        <tr>
+                            <td><?php _e('Add/ Remove','rapidtextai_chatgpt_scheduler') ?></td>
+                            <td><span id="ChatGPT_scheduler_copy_<?php echo $index?>" class="dashicons dashicons-dismiss remove_record"></span>
+                            <span class="remove_record dashicons dashicons-trash"></span>        
+                        </td>
+                        </tr>
+                    </tbody>
+                </table>
 
             <?php }
         }
@@ -214,5 +245,50 @@ class rapidtextai_chatgpt_scheduler_Helper {
 			//
 
 	}
+
+    function rapidtextai_simple_markdown_to_html($markdown) {
+        // Convert headers (we'll use a callback inside preg_replace_callback instead of preg_replace)
+        $markdown = preg_replace_callback('/^(#{1,6})\s*(.*?)\s*#*\s*(?:\n+|$)/m', function($matches) {
+            $level = strlen($matches[1]);
+            return "<h{$level}>{$matches[2]}</h{$level}>";
+        }, $markdown);
+    
+        // Convert bold (**text** or __text__)
+        $markdown = preg_replace('/\*\*(.*?)\*\*/', '<strong>$1</strong>', $markdown);
+        $markdown = preg_replace('/__(.*?)__/', '<strong>$1</strong>', $markdown);
+    
+        // Convert italic (*text* or _text_)
+        $markdown = preg_replace('/\*(.*?)\*/', '<em>$1</em>', $markdown);
+        $markdown = preg_replace('/_(.*?)_/', '<em>$1</em>', $markdown);
+    
+        // Convert links [text](url)
+        $markdown = preg_replace('/\[([^\[]+)\]\((.*?)\)/', '<a href="$2">$1</a>', $markdown);
+    
+        // Convert unordered lists
+        $markdown = preg_replace('/^\s*[\*\+\-]\s+(.*)/m', '<li>$1</li>', $markdown);
+        $markdown = preg_replace('/(<li>.*<\/li>)/s', '<ul>$1</ul>', $markdown);
+    
+        // Convert ordered lists
+        $markdown = preg_replace('/^\d+\.\s+(.*)/m', '<li>$1</li>', $markdown);
+        $markdown = preg_replace('/(<li>.*<\/li>)/s', '<ol>$1</ol>', $markdown);
+    
+        // Convert blockquotes
+        $markdown = preg_replace('/^\s*>\s+(.*)/m', '<blockquote>$1</blockquote>', $markdown);
+    
+        // Convert code blocks
+        $markdown = preg_replace('/```(.*?)```/s', '<pre><code>$1</code></pre>', $markdown);
+    
+        // Convert inline code
+        $markdown = preg_replace('/`([^`]+)`/', '<code>$1</code>', $markdown);
+    
+        // Convert newlines to paragraphs
+        $markdown = preg_replace('/\n\n/', '</p><p>', $markdown);
+        $markdown = '<p>' . $markdown . '</p>';  // Wrap with paragraph tags
+    
+        // Cleanup multiple paragraph tags
+        $markdown = str_replace('<p></p>', '', $markdown);
+    
+        return $markdown;
+    }
     
 }

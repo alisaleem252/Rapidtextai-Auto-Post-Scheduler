@@ -56,6 +56,7 @@ use Curl\Curl;
         $ChatGPTScheduler_settings_CBF =  get_option('ChatGPTScheduler_settings_CBF',array('key'=>'trial'));
           $chatGPT_schedule_settings =  get_option('chatGPT_schedule_settings',array());
           $Primary_Keyword=$chatGPT_schedule_settings['Primary_Keyword'][$key];
+          $Primary_Keyword2=$chatGPT_schedule_settings['Primary_Keyword2'][$key];
           $Template_Post=$chatGPT_schedule_settings['Template_Post'][$key];
           $time=$chatGPT_schedule_settings['time'][$key];
           $Pattern=$chatGPT_schedule_settings['Pattern'][$key];
@@ -78,20 +79,26 @@ use Curl\Curl;
             }
             else {
               $helper->log('Article');
-              $curl->post(rapidtextai_chatgpt_scheduler_network.'detailedarticle-v2?gigsixkey='.$ChatGPTScheduler_settings_CBF['key'],array("topic"=>$Primary_Keyword,"temperature"=>$Temperature));
+              $prompt = 'Generate a detailed article on the topic of '.$Primary_Keyword.' with the following keywords:'. $Primary_Keyword2;
+              $curl->post(rapidtextai_chatgpt_scheduler_network.'detailedarticle-v3?gigsixkey='.$ChatGPTScheduler_settings_CBF['key'],
+                                array(  
+                                        "type"=> "custom_prompt",
+                                        "custom_prompt"=> $prompt,
+                                        "temperature"=>$Temperature,
+                                        'model'=>'gemini-1.5-flash'));
             }
             // Start output buffering
             $helper->log('Response:'.print_r($curl->response,true));
             if (isset($curl->response)){
-                $content = $curl->response ? $helper->process_content_scheduler($curl->response) : $curl->response;
+                $content = $curl->response ? $helper->rapidtextai_simple_markdown_to_html($curl->response) : $curl->response;
                 
-                $title = $content['title'];
                 $helper->log(print_r($content,true));
-                if($content['content'] == '' || $content['title'] == ''){
+                if($content == '' ){
                   $helper->log('No Content');
                   return;
                 }
-                $new_post_id = $helper->duplicate_post($Template_Post,$title,$content['content'],$post_status);
+                $title = substr(strip_tags($content), 0, 50) . '...';
+                $new_post_id = $helper->duplicate_post($Template_Post,$title,$content,$post_status);
                 update_metadata('post',$new_post_id,'chatgpt_used_as_cgpt_templater','no');
             }
             
