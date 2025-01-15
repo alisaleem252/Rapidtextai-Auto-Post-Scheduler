@@ -1,5 +1,6 @@
 # Rapidtextai WordPress AI Auto Blogging
 
+## Getting Started
 [![Getting Started](https://img.youtube.com/vi/5FhAb54Lw4g/0.jpg)](https://www.youtube.com/watch?v=5FhAb54Lw4g)
 
 Contributors: alisaleem252, Rapidtextai  
