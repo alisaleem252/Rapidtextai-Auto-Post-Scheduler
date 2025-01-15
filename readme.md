@@ -1,4 +1,4 @@
-# Rapidtextai WordPress Auto Blogging
+# Rapidtextai WordPress AI Auto Blogging
 
 Contributors: alisaleem252, Rapidtextai  
 Tags: chatgpt, schedule, auto posting, chatgpt3, gpt4, rapidtextai, gemini, claude, ai text, ai text generation, auto pilot, ai auto pilot  
