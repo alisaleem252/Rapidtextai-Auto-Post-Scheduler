@@ -16,7 +16,7 @@
  * Plugin Name:       Rapidtextai WordPress AI Auto Blogging
  * Plugin URI:        https://app.rapidtextai.com
  * Description:       Generate AI Content for your WordPress Posts.
- * Version:           2.2.0
+ * Version:           2.5.0
  * Author:            Alisaleem252 || Rapidtextai
  * Author URI:        https://alisaleem252.com/
  * License:           GPL-2.0+
@@ -32,7 +32,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 
 
-define( 'rapidtextai_PLUGIN_VERSION', '2.1.0' );
+define( 'rapidtextai_PLUGIN_VERSION', '2.5.0' );
 define('rapidtextai_chatgpt_scheduler_URL', plugin_dir_url(__FILE__));
 define('rapidtextai_chatgpt_scheduler_PATH', dirname(__FILE__));
 define('rapidtextai_chatgpt_scheduler_network', 'https://app.rapidtextai.com/openai/');
